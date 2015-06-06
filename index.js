@@ -45,7 +45,11 @@ let renderLoop = (callback) => {
     result: {}
   }
 
-  React.render(rootElement, context)
+  try {
+    React.render(rootElement, context)
+  } catch (ex) {
+    console.log('Render Exception', ex.stack || ex.message)
+  }
 
   Animation.updateAll(Date.now())
   lastRender = Date.now()
