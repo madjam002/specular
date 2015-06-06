@@ -1,5 +1,6 @@
 import {Animation} from './src/animation'
 import {React} from './src/react'
+import {Beat} from './src/beat'
 import fs from 'fs'
 import path from 'path'
 
@@ -50,6 +51,8 @@ let renderLoop = (callback) => {
   } catch (ex) {
     console.log('Render Exception', ex.stack || ex.message)
   }
+
+  Beat.update(Date.now())
 
   Animation.updateAll(Date.now())
   lastRender = Date.now()

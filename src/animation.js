@@ -156,6 +156,11 @@ export class Animation {
       let myBeatStartTime = Beat.previousBeats[currentBeat - (currentBeat % this.beat)]
       let myProgress = beatProgress * this.beat
 
+      if (!myBeatStartTime) {
+        // no previous beats, it has to be an estimate
+        myBeatStartTime = Date.now() - (currentBeat * Beat.ms)
+      }
+
       this.startTime = myBeatStartTime
       if (this.startDelay) this.startTime += this.startDelay
       this.duration = Beat.ms * this.beat

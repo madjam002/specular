@@ -5,15 +5,18 @@ import keycode from 'keycode'
 
 class Button extends React.Component {
   componentWillMount() {
+    this.keyDown = this.keyDown.bind(this)
+    this.keyUp = this.keyUp.bind(this)
+
     if (this.props.shortcut) {
-      document.addEventListener('keydown', this.keyDown.bind(this), false)
-      document.addEventListener('keyup', this.keyUp.bind(this), false)
+      document.addEventListener('keydown', this.keyDown, false)
+      document.addEventListener('keyup', this.keyUp, false)
     }
   }
 
   componentWillUnmount() {
-    document.removeEventListener('keydown', this.keyDown.bind(this))
-    document.removeEventListener('keyup', this.keyUp.bind(this))
+    document.removeEventListener('keydown', this.keyDown)
+    document.removeEventListener('keyup', this.keyUp)
   }
 
   keyDown(e) {

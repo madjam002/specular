@@ -1,36 +1,32 @@
 import {Animation} from './animation'
 import {EventEmitter} from 'events'
 
-let nextTimeout = null
 let emitter = new EventEmitter()
 
 export var Beat = {
   currentBeat: 0,
   ms: 460,
   lastBeatTime: Date.now(),
+  lastBeatTap: Date.now(),
   averages: [460],
-  previousBeats: {},
+  previousBeats: [],
 
   on: emitter.on.bind(emitter),
   off: emitter.removeListener.bind(emitter),
 
   beat() {
-    // if ((Date.now() - Beat.lastBeatTime) < 300) return
-
-    // Beat.ms = Date.now() - Beat.lastBeatTime
-
-    let thisTime = Date.now() - Beat.lastBeatTime
+    let oldMs = Beat.ms
+    let thisTime = Date.now() - Beat.lastBeatTap
+    let beatProgress = Date.now() - Beat.lastBeatTime
 
     // discard if too long
     if (thisTime > 2000) {
-      Beat.lastBeatTime = Date.now()
-      if (nextTimeout) clearTimeout(nextTimeout)
-      Beat.performBeat()
+      Beat.lastBeatTap = Date.now()
       return
     }
 
     Beat.averages.push(thisTime)
-    if (Beat.averages.length > 10)
+    if (Beat.averages.length > 20)
       Beat.averages = Beat.averages.slice(1)
 
     let avg = 0
@@ -39,16 +35,24 @@ export var Beat = {
 
     Beat.ms = avg / Beat.averages.length
 
-    Beat.lastBeatTime = Date.now()
-
     console.log('tap', thisTime, 'avg', Beat.ms)
 
-    if (nextTimeout) clearTimeout(nextTimeout)
+    Beat.lastBeatTap = Date.now()
 
-    Beat.performBeat()
+    if (beatProgress < oldMs && beatProgress > (oldMs * .5)) {
+      Beat.performBeat()
+    }
+  },
+
+  reset() {
+    let barProg = Beat.currentBeat % 4
+    let lastBarBeat = Beat.currentBeat - barProg
+    Beat.currentBeat = lastBarBeat
+    Beat.previousBeats = Beat.previousBeats.slice(0, lastBarBeat)
   },
 
   performBeat() {
+    Beat.lastBeatTime = Date.now()
     Beat.currentBeat++
     console.log('Performing beat', Beat.currentBeat)
     Beat.previousBeats[Beat.currentBeat] = Date.now()
@@ -71,8 +75,10 @@ export var Beat = {
       }
     }
 
-    emitter.emit('beat')
+    emitter.emit('beat', {beat: Beat.currentBeat, ms: Beat.ms})
+  },
 
-    nextTimeout = setTimeout(Beat.performBeat, Beat.ms)
-  }
+  update(now) {
+    if (now >= (Beat.lastBeatTime + Beat.ms)) Beat.performBeat()
+  },
 }
