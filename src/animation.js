@@ -1,5 +1,6 @@
 import tweenFunctions from 'tween-functions'
 import {Beat} from './beat'
+import {EventEmitter} from 'events'
 
 /*
 Usage
@@ -113,7 +114,17 @@ export class Animation {
     this.yoyo = opts.yoyo
     this.reversed = opts.reversed
 
+    this.events = new EventEmitter()
+
     if (this.autoStart) this.start()
+  }
+
+  on(event, callback) {
+    this.events.on(event, callback)
+  }
+
+  off(event, callback) {
+    this.events.removeListener(event, callback)
   }
 
   // Start this easing function
@@ -156,6 +167,8 @@ export class Animation {
     Animation.all.push(this)
     if (this.beat) Animation.beatOnly.push(this)
 
+    this.events.emit('start')
+
     return this
   }
 
@@ -177,6 +190,8 @@ export class Animation {
       }
     }
 
+    this.events.emit('start')
+
     return this
   }
 
@@ -184,6 +199,8 @@ export class Animation {
     this.running = false
     Animation.all.splice(Animation.all.indexOf(this), 1)
     Animation.beatOnly.splice(Animation.beatOnly.indexOf(this), 1)
+
+    this.events.removeAllListeners('start')
 
     return this
   }

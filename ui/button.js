@@ -17,7 +17,7 @@ class Button extends React.Component {
   }
 
   keyDown(e) {
-    if (keycode(e) === this.props.shortcut) {
+    if (keycode(e) === this.props.shortcut && !e.repeat) {
       this.props.press()
     }
   }
@@ -33,7 +33,12 @@ class Button extends React.Component {
       <button style={[styles.button, {
         color: Colour(this.props.background).dark() ? 'whitesmoke' : 'black',
         background: this.props.background,
-      }, this.props.pressed && styles.pressed, this.props.style]} onClick={this.props.press} onMouseUp={this.props.release}>{this.props.children}</button>
+      }, this.props.pressed && styles.pressed, this.props.style]} onClick={this.props.press} onMouseUp={this.props.release}>
+        {this.props.children}
+        {this.props.shortcut ? <div style={styles.shortcutOverlay}>
+          {this.props.shortcut}
+        </div> : null}
+      </button>
     )
   }
 }
@@ -53,6 +58,19 @@ const styles = {
     borderRadius: 5,
     outline: 'none',
     flex: 1,
+    position: 'relative',
+    overflow: 'hidden',
+  },
+
+  shortcutOverlay: {
+    position: 'absolute',
+    bottom: 0,
+    right: 0,
+    color: 'black',
+    fontSize: 10,
+    textTransform: 'uppercase',
+    padding: '3px 5px 3px 5px',
+    background: 'rgba(255, 255, 255, 0.5)',
   },
 
   pressed: {

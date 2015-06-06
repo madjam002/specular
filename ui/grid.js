@@ -8,20 +8,13 @@ const MARGIN = 10
 
 class Row extends React.Component {
   render() {
-    let children = _.values(this.props.children)
-
     return (
       <View style={[
             styles.row,
             {
               alignItems: this.props.align,
               justifyContent: this.props.justify,
-
-              // try and cancel out margin from last child. if this row doesn't have any children,
-              // then just minus the default column margin.
-              marginRight: children.length > 0 ?
-                (-children[children.length - 1].props.margin || -MARGIN)
-              : -MARGIN
+              marginRight: -MARGIN
             },
             this.props.style,
           ]}>
