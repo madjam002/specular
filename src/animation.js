@@ -114,18 +114,11 @@ export class Animation {
     this.reversed = opts.reversed
 
     if (this.autoStart) this.start()
-
-    if (this.beat) {
-      // this.duration = Beat.ms
-
-      // if no start delay, then set the start time of this animation to the start time of the last beat
-      // this.startTime = Beat.lastBeatTime
-    }
   }
 
   // Start this easing function
   start() {
-    if (this.startDelay) {
+    if (this.startDelay && !this.beat) {
       setTimeout(() => {
         this._start()
       }, this.startDelay)
@@ -153,6 +146,7 @@ export class Animation {
       let myProgress = beatProgress * this.beat
 
       this.startTime = myBeatStartTime
+      if (this.startDelay) this.startTime += this.startDelay
       this.duration = Beat.ms * this.beat
 
       // TODO do we need to set the current point based on progress?
