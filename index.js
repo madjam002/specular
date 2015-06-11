@@ -42,6 +42,11 @@ let lastRender = Date.now()
 let rootElement = null
 
 let renderLoop = (callback) => {
+  if ((Date.now() - lastRender) < (1000 / 60)) {
+    setImmediate(renderLoop.bind(this, callback))
+    return
+  }
+
   let context = {
     result: {}
   }

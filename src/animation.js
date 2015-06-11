@@ -62,12 +62,15 @@ export class Animation {
     Lissajous(opts = {}) {
       opts.m = opts.m || 1
       opts.n = opts.n || 2
-      opts.phase = opts.phase || 1
+      opts.phase = opts.phase || 0
+      opts.width = opts.width || 255
+      opts.height = opts.height || 255
 
       return (progress) => {
-        let x = Math.sin(opts.m * progress)
-        let y = Math.sin(opts.n * progress + opts.phase)
-        return { x: x * 255, y: y * 255 }
+        progress *= Math.PI
+        let x = opts.width * Math.sin(opts.m * progress)
+        let y = opts.height * Math.sin(opts.n * progress + opts.phase)
+        return { x: x, y: y }
       }
     }
   }
