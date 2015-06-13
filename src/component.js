@@ -10,7 +10,7 @@ export class Component {
   }
 
   unmount() {
-    if (!this._mounted) return
+    if (!this.isMounted) return
     if (this.componentWillUnmount) this.componentWillUnmount()
 
     // stop tweens
@@ -20,7 +20,7 @@ export class Component {
       delete tweens[tween]
     }
 
-    this._mounted = false
+    this.isMounted = false
     console.log(this.constructor.name, 'has been unmounted')
   }
 }

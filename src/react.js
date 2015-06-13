@@ -122,7 +122,7 @@ export var React = {
     } else {
       component = newRenderTree[thisId] = renderTree[thisId] = new element.type(_.clone(element.props), context)
       if (component.componentWillMount) component.componentWillMount()
-      component._mounted = true
+      component.isMounted = true
       // console.log('Mounted', thisId)
       if (component.componentDidMount) component.componentDidMount()
     }
