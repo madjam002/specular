@@ -26,7 +26,7 @@ export var Beat = {
     }
 
     Beat.averages.push(thisTime)
-    if (Beat.averages.length > 20)
+    if (Beat.averages.length > 8)
       Beat.averages = Beat.averages.slice(1)
 
     let avg = 0

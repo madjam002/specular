@@ -1,6 +1,5 @@
 import React from 'react'
 import Radium from 'radium'
-import ipc from 'ipc'
 
 import {View} from './view'
 import {Text} from './text'
@@ -16,13 +15,12 @@ class BPM extends React.Component {
   }
 
   componentDidMount() {
-    console.log('mounted')
     this.onBeat = this.onBeat.bind(this)
-    ipc.on('beat', this.onBeat)
+    this.props.socket.on('beat', this.onBeat)
   }
 
   componentWillUnmount() {
-    ipc.removeListener('beat', this.onBeat)
+    this.props.socket.removeListener('beat', this.onBeat)
   }
 
   onBeat(msg) {
@@ -40,8 +38,8 @@ class BPM extends React.Component {
           <View style={[styles.indicator, this.state.beat === 3 && styles.indicatorActive]} />
         </View>
         <Row>
-          <Button shortcut="ctrl" press={() => ipc.send('beat:tap')}>Beat</Button>
-          <Button press={() => ipc.send('beat:reset')}>Reset Beat</Button>
+          <Button shortcut="ctrl" press={() => this.props.socket.emit('beat:tap')}>Beat</Button>
+          <Button press={() => this.props.socket.emit('beat:reset')}>Reset Beat</Button>
         </Row>
       </Well>
     )

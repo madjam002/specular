@@ -34,9 +34,14 @@ class Button extends React.Component {
   render() {
     return (
       <button style={[styles.button, {
-        color: Colour(this.props.background).dark() ? 'whitesmoke' : 'black',
-        background: this.props.background,
-      }, this.props.pressed && styles.pressed, this.props.style]} onClick={this.props.press} onMouseUp={this.props.release}>
+        color: Colour(this.props.bg || this.props.background).dark() ? 'whitesmoke' : 'black',
+        background: this.props.bg || this.props.background,
+      }, this.props.pressed && styles.pressed, this.props.style]}
+        onClick={this.props.press}
+        onMouseUp={this.props.release}
+        onTouchStart={this.props.press}
+        onTouchEnd={this.props.release}
+      >
         {this.props.children}
         {this.props.shortcut ? <div style={styles.shortcutOverlay}>
           {this.props.shortcut}
@@ -46,7 +51,29 @@ class Button extends React.Component {
   }
 }
 
+class StateButton extends React.Component {
+  render() {
+    let isPressed = true
+    let currentState = this.props.c.state
+
+    for (let k in this.props.state) {
+      if (currentState[k] !== this.props.state[k]) {
+        isPressed = false
+        break
+      }
+    }
+
+    return (
+      <Button
+        pressed={isPressed}
+        press={() => this.props.c.setProps(this.props.state)}
+        {... this.props}>{this.props.children}</Button>
+    )
+  }
+}
+
 Button = Radium.Enhancer(Button)
+StateButton = Radium.Enhancer(StateButton)
 
 Button.defaultProps = {
   background: '#333'
@@ -83,4 +110,4 @@ const styles = {
 }
 
 
-export {Button}
+export {Button, StateButton}
