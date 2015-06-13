@@ -311,6 +311,9 @@ export class Animation {
     // get progress of animation through point
     let currentPoint = this.getCurrentPoint()
     let pointProgress = ((this.reversed ? 1 - progress : progress) - currentPoint.from) / this.getPointDuration()
+
+    if (isNaN(pointProgress)) return
+
     if (this.reversed) pointProgress = 1 - pointProgress
 
     // move to next point?
