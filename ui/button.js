@@ -52,7 +52,18 @@ class Button extends React.Component {
 }
 
 class StateButton extends React.Component {
-  render() {
+  press() {
+    this.props.c.setProps(this.props.state)
+    if (this.props.onPress) this.props.onPress(this.props.state)
+  }
+
+  release() {
+    if (this.props.stateOff && this.isPressed()) {
+      this.props.c.setProps(this.props.stateOff)
+    }
+  }
+
+  isPressed() {
     let isPressed = true
     let currentState = this.props.c.state
 
@@ -63,10 +74,17 @@ class StateButton extends React.Component {
       }
     }
 
+    return isPressed
+  }
+
+  render() {
+    let isPressed = this.isPressed()
+
     return (
       <Button
         pressed={isPressed}
-        press={() => this.props.c.setProps(this.props.state)}
+        press={this.press.bind(this)}
+        release={this.release.bind(this)}
         {... this.props}>{this.props.children}</Button>
     )
   }
