@@ -105,6 +105,12 @@ export var React = {
 
     let component = null
 
+    if (renderTree[thisId] && element.type !== renderTree[thisId].constructor) {
+      // ID already exists in render tree, but the component class is wrong
+      renderTree[thisId].unmount()
+      delete renderTree[thisId]
+    }
+
     if (renderTree[thisId]) {
       component = newRenderTree[thisId] = renderTree[thisId]
 
