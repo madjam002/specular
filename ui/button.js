@@ -2,6 +2,7 @@ import React from 'react'
 import Radium from 'radium'
 import Colour from 'color'
 import keycode from 'keycode'
+import _ from 'lodash'
 
 class Button extends React.Component {
   componentWillMount() {
@@ -68,7 +69,7 @@ class StateButton extends React.Component {
     let currentState = this.props.c.state
 
     for (let k in this.props.state) {
-      if (currentState[k] !== this.props.state[k]) {
+      if (!_.isEqual(currentState[k], this.props.state[k])) {
         isPressed = false
         break
       }
