@@ -3,33 +3,49 @@ import Radium from 'radium'
 import Colour from 'color'
 import keycode from 'keycode'
 import _ from 'lodash'
+import {EventEmitter} from 'events'
+
+let events = new EventEmitter()
 
 class Button extends React.Component {
+  static registerEvents() {
+    document.addEventListener('keydown', (e) => {
+      e.preventDefault()
+      if (!e.repeat) {
+        events.emit(`down:${keycode(e)}`)
+        console.log('down', keycode(e))
+      }
+    }, false)
+    document.addEventListener('keyup', (e) => {
+      events.emit(`up:${keycode(e)}`)
+    }, false)
+  }
+
   componentWillMount() {
     this.keyDown = this.keyDown.bind(this)
     this.keyUp = this.keyUp.bind(this)
 
     if (this.props.shortcut) {
-      document.addEventListener('keydown', this.keyDown, false)
-      document.addEventListener('keyup', this.keyUp, false)
+      events.on(`down:${this.props.shortcut}`, this.keyDown)
+      events.on(`up:${this.props.shortcut}`, this.keyUp)
     }
   }
 
   componentWillUnmount() {
-    document.removeEventListener('keydown', this.keyDown)
-    document.removeEventListener('keyup', this.keyUp)
+    events.removeListener(`down:${this.props.shortcut}`, this.keyDown)
+    events.removeListener(`up:${this.props.shortcut}`, this.keyUp)
+  }
+
+  componentWillUpdate(props) {
+    return props.pressed !== this.props.pressed
   }
 
   keyDown(e) {
-    if (keycode(e) === this.props.shortcut && !e.repeat) {
-      this.props.press()
-    }
+    this.props.press()
   }
 
   keyUp(e) {
-    if (keycode(e) === this.props.shortcut && this.props.release) {
-      this.props.release()
-    }
+    if (this.props.release) this.props.release()
   }
 
   render() {
@@ -38,7 +54,7 @@ class Button extends React.Component {
         color: Colour(this.props.bg || this.props.background).dark() ? 'whitesmoke' : 'black',
         background: this.props.bg || this.props.background,
       }, this.props.pressed && styles.pressed, this.props.style]}
-        onClick={this.props.press}
+        onMouseDown={this.props.press}
         onMouseUp={this.props.release}
         onTouchStart={this.props.press}
         onTouchEnd={this.props.release}
@@ -54,6 +70,7 @@ class Button extends React.Component {
 
 class StateButton extends React.Component {
   press() {
+    console.log('pressed', this.props.state)
     this.props.c.setProps(this.props.state)
     if (this.props.onPress) this.props.onPress(this.props.state)
   }
