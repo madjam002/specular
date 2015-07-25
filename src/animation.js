@@ -305,7 +305,7 @@ export class Animation {
 
     if (!isNaN(firstValue)) {
       // simple number
-      this.value = easingFunction(progress, from, to, 1)
+      this.value = easingFunction(progress, from, to, 1, this.getPointDuration() * this.duration)
     } else if (typeof firstValue === 'string') {
       this.value = from
     } else {
@@ -313,7 +313,7 @@ export class Animation {
       this.value = {}
       for (let prop in firstValue) {
         if (isNaN(firstValue[prop])) continue
-        this.value[prop] = easingFunction(progress, from[prop], to[prop], 1)
+        this.value[prop] = easingFunction(progress, from[prop], to[prop], 1, this.getPointDuration() * this.duration)
       }
     }
   }
