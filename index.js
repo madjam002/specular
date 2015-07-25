@@ -12,7 +12,7 @@ export * from './src/animation'
 export * from './src/beat'
 export * from './src/watcher'
 
-let lastRender = Date.now()
+export * from './src/outputs/artnet'
 
 export default class Specular extends EventEmitter {
   use(func) {

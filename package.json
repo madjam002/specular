@@ -14,6 +14,7 @@
     ]
   },
   "dependencies": {
+    "artnet": "0.0.3",
     "keycode": "^2.1.0",
     "lodash": "^3.9.3",
     "radium": "^0.12.2",
