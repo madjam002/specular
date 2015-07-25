@@ -16,7 +16,7 @@ export class Component {
     // stop tweens
     let tweens = this.tweens ? this.tweens : {}
     for (let tween in tweens) {
-      tweens[tween].stop()
+      tweens[tween].dispose()
       delete tweens[tween]
     }
 
