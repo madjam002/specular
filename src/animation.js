@@ -1,6 +1,7 @@
 import tweenFunctions from 'tween-functions'
 import {Beat} from './beat'
 import {EventEmitter} from 'events'
+import _ from 'lodash'
 
 /*
 Usage
@@ -166,6 +167,8 @@ export class Animation {
   }
 
   _start() {
+    if (this.disposed) return
+
     this.running = true
     this.startTime = Date.now()
     this.currentPointIndex = 0
@@ -203,6 +206,8 @@ export class Animation {
   }
 
   restart(beatCheck = false) {
+    if (this.disposed) return
+
     if (beatCheck) {
       if (this.beat && this.beat >= 1) return
     }
@@ -227,12 +232,17 @@ export class Animation {
 
   stop() {
     this.running = false
-    Animation.all.splice(Animation.all.indexOf(this), 1)
-    Animation.beatOnly.splice(Animation.beatOnly.indexOf(this), 1)
+    _.remove(Animation.all, this)
+    _.remove(Animation.beatOnly, this)
 
     this.events.removeAllListeners('start')
 
     return this
+  }
+
+  dispose() {
+    this.stop()
+    this.disposed = true
   }
 
   nextPoint() {
@@ -310,7 +320,7 @@ export class Animation {
 
   // Update this easing function
   update(time) {
-    if (!this.running) return
+    if (!this.running || this.disposed) return
 
     // get progress of animation
     let progress = (time - this.startTime) / this.duration
