@@ -11,6 +11,7 @@ export * from './src/create-fixture'
 export * from './src/animation'
 export * from './src/beat'
 export * from './src/watcher'
+export * from './src/socket-io'
 
 export * from './src/outputs/artnet'
 
