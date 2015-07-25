@@ -47,6 +47,28 @@ export class Animation {
 
   static Easing = tweenFunctions
 
+  static Stepper(func, minTime = 460, multiplier = 32) {
+    return (progress, from, to, time, totalTime) => {
+      let steps = 1
+      if (totalTime > minTime) {
+        let relTime = (totalTime - minTime) / multiplier
+        steps = relTime
+      }
+
+      progress *= steps
+      progress = Math.floor(progress) / steps
+      return func(progress, from, to, time)
+    }
+  }
+
+  static Steps(func, steps) {
+    return (progress, from, to, time, totalTime) => {
+      progress *= steps
+      progress = Math.floor(progress) / steps
+      return func(progress, from, to, time)
+    }
+  }
+
   static Movement = {
     Circle(opts = {}) {
       opts.radius = opts.radius || 128
