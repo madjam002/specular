@@ -2,6 +2,7 @@ import React from 'react'
 import Radium from 'radium'
 
 import {Well} from './well'
+import {View} from './view'
 import {Row, Col} from './grid'
 import {H3} from './text'
 import {Button} from './button'
@@ -38,7 +39,7 @@ class Pages extends React.Component {
           </Col>
         </Row>
 
-        {this.props.pages[this.state.page]}
+        <View key={this.state.page}>{this.props.pages[this.state.page]}</View>
       </Well>
     )
   }
