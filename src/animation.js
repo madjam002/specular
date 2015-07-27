@@ -1,3 +1,4 @@
+import React from 'react'
 import tweenFunctions from 'tween-functions'
 import {Beat} from './beat'
 import {EventEmitter} from 'events'
@@ -93,7 +94,7 @@ export class Animation {
         progress *= Math.PI
         let x = opts.width * Math.sin(opts.m * progress)
         let y = opts.height * Math.sin(opts.n * progress + opts.phase)
-        return { x: x, y: y }
+        return { x, y }
       }
     }
   }
@@ -104,6 +105,24 @@ export class Animation {
   static updateAll(time) {
     for (let anim of Animation.all) {
       anim.update(time)
+    }
+  }
+
+  static Mixin(Component) {
+    Component.prototype.tweens = {}
+
+    return class AnimationWrapper extends React.Component {
+      componentWillMount() {
+        this.interval = setInterval(() => this.forceUpdate(), 1000 / 120)
+      }
+
+      componentWillUnmount() {
+        clearInterval(this.interval)
+      }
+
+      render() {
+        return React.createElement(Component, this.props)
+      }
     }
   }
 

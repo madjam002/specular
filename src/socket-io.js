@@ -10,18 +10,15 @@ export function SocketIO(port) {
 
     Beat.on('beat', (msg) => io.emit('beat', msg))
 
+    app.on('props:update', props => io.emit('rootProps:update', props))
+
     io.on('connection', socket => {
       console.log('Got socket connection')
 
       socket.on('beat:tap', () => Beat.beat())
       socket.on('beat:reset', () => Beat.reset())
-      socket.on('rootProps:set', props => {
-        app.setRootProps(props)
-        io.emit('rootProps:update', app.getRootProps())
-      })
-      socket.on('rootProps:get', () => {
-        io.emit('rootProps:update', app.getRootProps())
-      })
+      socket.on('rootProps:set', props => app.setRootProps(props))
+      socket.on('rootProps:get', () => io.emit('rootProps:update', app.getRootProps()))
     })
 
     server.listen(port)

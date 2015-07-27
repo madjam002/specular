@@ -1,12 +1,13 @@
-import {Component} from './component'
-import {React} from './react'
+import React from 'react'
 
-export var CreateFixture = (Definition, startChannel) => {
-  return class FixtureWrapper extends Component {
+export function createFixture(Definition, universe, startChannel) {
+
+  return class FixtureWrapper extends React.Component {
     render() {
       return (
-        <Definition start={startChannel} {... this.props} />
+        <Definition universe={universe} start={startChannel} {... this.props} />
       )
     }
   }
+
 }
