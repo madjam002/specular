@@ -9,6 +9,8 @@ import createContainer from './src/create-container'
 export default class Specular extends EventEmitter {
   constructor() {
     super()
+
+    this.universeCount = 0
   }
 
   use(func) {
@@ -73,7 +75,7 @@ export default class Specular extends EventEmitter {
     this._updateQueued = false
 
     // go through the render tree and collect data
-    const universes = {}
+    const universes = new Array(this.universeCount)
     this._renderComponent(universes, this.rootInstance._reactInternalInstance)
 
     // ensure undefined values are 0
@@ -92,8 +94,9 @@ export default class Specular extends EventEmitter {
       return
     }
 
-    if (component.fixtureData) {
+    if (component.fixtureData && component.fixtureUniverse !== undefined) {
       if (!universes[component.fixtureUniverse]) universes[component.fixtureUniverse] = {}
+      this.universeCount = Math.max(this.universeCount, component.fixtureUniverse)
       Object.assign(universes[component.fixtureUniverse], component.fixtureData)
     }
 

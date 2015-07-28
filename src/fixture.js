@@ -10,15 +10,18 @@ export class Fixture extends React.Component {
     this._currentElement = element
     this.fixtureData = {}
     this.fixtureUniverse = null
+    this.queueUpdate = null
   }
 
   mountComponent(rootID, transaction, context) {
     const props = this._currentElement.props
     this.update(context, {}, props)
+    this.queueUpdate = context.app.queueUpdate.bind(context.app)
   }
 
   unmountComponent() {
-
+    delete this.fixtureData
+    this.queueUpdate()
   }
 
   receiveComponent(nextElement, transaction, context) {
