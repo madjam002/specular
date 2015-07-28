@@ -9,8 +9,6 @@ import createContainer from './src/create-container'
 export default class Specular extends EventEmitter {
   constructor() {
     super()
-
-    this.universeLayers = []
   }
 
   use(func) {
@@ -74,17 +72,12 @@ export default class Specular extends EventEmitter {
   _performUpdate() {
     this._updateQueued = false
 
-    const universes = []
+    // go through the render tree and collect data
+    const universes = {}
+    this._renderComponent(universes, this.rootInstance._reactInternalInstance)
 
-    for (let i = 0; i < this.universeLayers.length; i++) {
-      universes[i] = {}
-
-      const layers = this.universeLayers[i]
-      for (let layerID in layers) {
-        Object.assign(universes[i], layers[layerID])
-      }
-
-      // ensure undefined values are 0
+    // ensure undefined values are 0
+    for (let i = 0; i < universes.length; i++) {
       for (let x = 0; x <= 512; x++) {
         if (!universes[i][x]) universes[i][x] = 0
       }
@@ -93,25 +86,24 @@ export default class Specular extends EventEmitter {
     this.emit('output', universes)
   }
 
-  addUniverseLayer(universe) {
-    if (!this.universeLayers[universe]) this.universeLayers[universe] = {}
+  _renderComponent(universes, component) {
+    if (component._renderedComponent) {
+      this._renderComponent(universes, component._renderedComponent)
+      return
+    }
 
-    const layerID = _.size(this.universeLayers[universe]) + 1
-    this.universeLayers[universe][layerID] = {}
+    if (component.fixtureData) {
+      if (!universes[component.fixtureUniverse]) universes[component.fixtureUniverse] = {}
+      Object.assign(universes[component.fixtureUniverse], component.fixtureData)
+    }
 
-    this.queueUpdate()
-
-    return layerID
-  }
-
-  updateUniverseLayer(universe, layerID, data) {
-    this.universeLayers[universe][layerID] = data
-    this.queueUpdate()
-  }
-
-  removeUniverseLayer(universe, layerID) {
-    delete this.universeLayers[universe][layerID]
-    this.queueUpdate()
+    // process children
+    if (component._renderedChildren) {
+      const children = component._renderedChildren
+      for (let key in children) {
+        this._renderComponent(universes, children[key])
+      }
+    }
   }
 }
 
