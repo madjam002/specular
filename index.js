@@ -26,6 +26,7 @@ export default class Specular extends EventEmitter {
       let document = null
       global.document = require('jsdom').jsdom()
       global.window = global.document.parentWindow
+      global.navigator = { userAgent: '__specular__' }
     } catch (ex) {}
     const dummyContainerNode = document.createElement('div')
     // no more hax beyond this point... (hopefully)
@@ -120,6 +121,3 @@ export * from './src/socket-io'
 export * from './src/watcher'
 
 export * from './src/outputs/artnet'
-
-export * as React from 'react'
-export {Component} from 'react'
