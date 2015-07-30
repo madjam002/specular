@@ -1,8 +1,8 @@
-import React from 'react'
 import tweenFunctions from 'tween-functions'
 import {Beat} from './beat'
 import {EventEmitter} from 'events'
 import _ from 'lodash'
+import AnimatedStepper from './animation/stepper'
 
 /*
 Usage
@@ -63,13 +63,7 @@ export class Animation {
     }
   }
 
-  static Steps(func, steps) {
-    return (progress, from, to, time, totalTime) => {
-      progress *= steps
-      progress = Math.floor(progress) / steps
-      return func(progress, from, to, time)
-    }
-  }
+  static Steps = AnimatedStepper
 
   static Movement = {
     Circle(opts = {}) {
@@ -105,24 +99,6 @@ export class Animation {
   static updateAll(time) {
     for (let anim of Animation.all) {
       anim.update(time)
-    }
-  }
-
-  static Mixin(Component) {
-    Component.prototype.tweens = {}
-
-    return class AnimationWrapper extends React.Component {
-      componentWillMount() {
-        this.interval = setInterval(() => this.forceUpdate(), 1000 / 120)
-      }
-
-      componentWillUnmount() {
-        clearInterval(this.interval)
-      }
-
-      render() {
-        return React.createElement(Component, this.props)
-      }
     }
   }
 

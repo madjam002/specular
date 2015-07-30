@@ -3,6 +3,7 @@ import _ from 'lodash'
 import {EventEmitter} from 'events'
 
 import {Animation} from './src/animation'
+import {Animated} from './src/animation/animated'
 import {Beat} from './src/beat'
 import createContainer from './src/create-container'
 
@@ -56,6 +57,7 @@ export default class Specular extends EventEmitter {
   update() {
     Beat.update(Date.now())
     Animation.updateAll(Date.now())
+    Animated.Value.updateAll(Date.now())
   }
 
   setRootProps(props) {
@@ -119,5 +121,7 @@ export * from './src/fixture'
 export * from './src/scene'
 export * from './src/socket-io'
 export * from './src/watcher'
+
+export * from './src/animation/animated'
 
 export * from './src/outputs/artnet'

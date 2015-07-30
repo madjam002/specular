@@ -11,6 +11,8 @@ export var Beat = {
   averages: [460],
   previousBeats: [],
 
+  animations: [],
+
   on: emitter.on.bind(emitter),
   off: emitter.removeListener.bind(emitter),
 
@@ -59,6 +61,7 @@ export var Beat = {
     let animations = Animation.beatOnly
     let time = Date.now()
 
+    // OLD animations
     for (let anim of animations) {
       anim.duration = Beat.ms * anim.beat
 
@@ -72,6 +75,19 @@ export var Beat = {
         }
       } else if (anim.beat < 1) {
         anim.duration = Beat.ms * anim.beat
+      }
+    }
+
+    // new animations
+    for (let anim of Beat.animations) {
+      anim._duration = Beat.ms * anim._beat
+
+      if (anim._beat >= 1 && Beat.currentBeat % anim._beat === 0) {
+        if (anim._delay) {
+          setTimeout(() => anim.restart(), anim._delay)
+        } else {
+          anim.restart()
+        }
       }
     }
 
