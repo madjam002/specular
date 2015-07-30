@@ -1,5 +1,3 @@
-import _ from 'lodash'
-
 const all = []
 const beatBased = []
 
@@ -14,8 +12,8 @@ export var AnimationRegistry = {
   },
 
   remove(animation) {
-    _.remove(all, animation)
-    _.remove(beatBased, animation)
+    if (all.indexOf(animation) !== -1) all.splice(all.indexOf(animation), 1)
+    if (beatBased.indexOf(animation) !== -1) beatBased.splice(beatBased.indexOf(animation), 1)
   },
 
   updateAll(time) {
