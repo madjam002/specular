@@ -1,8 +1,9 @@
+import Progressable from './progressable'
+import Tweenable from './tweenable'
 import tweenFunctions from 'tween-functions'
-import {Beat} from '../beat'
-import Stepper from './stepper'
-import {AnimationRegistry} from './registry'
 
+@Tweenable
+@Progressable
 export default class AnimatedValue {
 
   constructor(opts) {
@@ -12,102 +13,6 @@ export default class AnimatedValue {
     this._yoyo = true
     this._ms = 500
     this._delay = 0
-  }
-
-  // Configuration
-
-  every(amount) {
-    const anim = this
-
-    return {
-      beats() {
-        anim._beat = amount
-        return anim
-      },
-
-      ms() {
-        anim._ms = amount
-        return anim
-      }
-    }
-  }
-
-  delay(ms) {
-    this._delay = ms
-    return this
-  }
-
-  easing(func) {
-    if (func === false) {
-      this._easing = tweenFunctions.none
-    } else {
-      this._easing = func
-    }
-
-    return this
-  }
-
-  yoyo(yoyo) {
-    this._yoyo = yoyo
-    return this
-  }
-
-  step(steps = 1) {
-    this._easing = Stepper(this._easing, steps)
-    return this
-  }
-
-  ///
-
-  start() {
-    if (this._delay) {
-      setTimeout(() => this._start(), this._delay)
-    } else {
-      this._start()
-    }
-
-    // add to animation registry
-    AnimationRegistry.add(this, this._beat !== undefined)
-
-    return this
-  }
-
-  _start() {
-    const now = Date.now()
-
-    this._startTime = now
-
-    if (this._beat) {
-      // we need to progress the animation if it's beat based
-      const currentBeat = Beat.currentBeat
-      const beatStartTime = Beat.lastBeatTime
-      const beatEstEndTime = beatStartTime + Beat.ms
-      const beatProgress = (now - beatStartTime) / (beatEstEndTime - beatStartTime)
-
-      let thisStartTime = Beat.previousBeats[currentBeat - (currentBeat % this._beat)]
-
-      if (!thisStartTime) {
-        // no previous beats to use to work out start time so it has to be an estimate
-        thisStartTime = now - (currentBeat * Beat.ms)
-      }
-
-      this._startTime = thisStartTime
-      if (this._delay) this._startTime += this._delay
-      this._duration = Beat.ms * this._beat
-    }
-  }
-
-  restart() {
-    this._startTime = Date.now()
-    if (this._yoyo) this._reversed = !this._reversed
-
-    return this
-  }
-
-  dispose() {
-    AnimationRegistry.remove(this)
-
-    return this
   }
 
   update(time) {
