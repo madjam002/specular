@@ -119,6 +119,7 @@ export * from './src/beat'
 export * from './src/create-fixture'
 export * from './src/fixture'
 export * from './src/scene'
+export * from './src/sequencer'
 export * from './src/socket-io'
 export * from './src/watcher'
 
