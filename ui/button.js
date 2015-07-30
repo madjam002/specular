@@ -70,7 +70,6 @@ class Button extends React.Component {
 
 class StateButton extends React.Component {
   press() {
-    console.log('pressed', this.props.state)
     this.props.c.setProps(this.props.state)
     if (this.props.onPress) this.props.onPress(this.props.state)
   }
