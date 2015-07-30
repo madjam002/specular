@@ -1,17 +1,9 @@
 import tweenFunctions from 'tween-functions'
 import {Beat} from '../beat'
-import _ from 'lodash'
 import Stepper from './stepper'
+import {AnimationRegistry} from './registry'
 
 export default class AnimatedValue {
-
-  static all = []
-
-  static updateAll(time) {
-    for (let anim of AnimatedValue.all) {
-      anim.update(time)
-    }
-  }
 
   constructor(opts) {
     this.from = opts.from
@@ -74,12 +66,8 @@ export default class AnimatedValue {
       this._start()
     }
 
-    // add to beat animation registry
-    if (this._beat) {
-      Beat.animations.push(this)
-    }
-
-    AnimatedValue.all.push(this)
+    // add to animation registry
+    AnimationRegistry.add(this, this._beat !== undefined)
 
     return this
   }
@@ -117,8 +105,7 @@ export default class AnimatedValue {
   }
 
   dispose() {
-    _.remove(AnimatedValue.all, this)
-    _.remove(Beat.animations, this)
+    AnimationRegistry.remove(this)
 
     return this
   }

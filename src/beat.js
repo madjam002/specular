@@ -1,4 +1,5 @@
 import {Animation} from './animation'
+import {AnimationRegistry} from './animation/registry'
 import {EventEmitter} from 'events'
 
 let emitter = new EventEmitter()
@@ -10,8 +11,6 @@ export var Beat = {
   lastBeatTap: Date.now(),
   averages: [460],
   previousBeats: [],
-
-  animations: [],
 
   on: emitter.on.bind(emitter),
   off: emitter.removeListener.bind(emitter),
@@ -79,7 +78,7 @@ export var Beat = {
     }
 
     // new animations
-    for (let anim of Beat.animations) {
+    for (let anim of AnimationRegistry.beatBased) {
       anim._duration = Beat.ms * anim._beat
 
       if (anim._beat >= 1 && Beat.currentBeat % anim._beat === 0) {
