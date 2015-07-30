@@ -1,7 +1,8 @@
 import React from 'react'
 import tweenFunctions from 'tween-functions'
-import AnimatedValue from './value'
+import AnimatedMovement from './movement'
 import AnimatedStepper from './stepper'
+import AnimatedValue from './value'
 
 export function Animated(Component) {
   Component.prototype.tweens = {}
@@ -33,5 +34,6 @@ export function Animated(Component) {
 }
 
 Animated.Easing = tweenFunctions
-Animated.Value = AnimatedValue
+Animated.Movement = AnimatedMovement
 Animated.Stepper = AnimatedStepper
+Animated.Value = AnimatedValue
