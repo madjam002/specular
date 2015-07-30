@@ -74,6 +74,8 @@ export default function(progressable) {
       this._startTime = Date.now()
       if (this._yoyo) this._reversed = !this._reversed
 
+      if (this.restarted) this.restarted()
+
       return this
     },
 

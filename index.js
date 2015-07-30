@@ -124,5 +124,6 @@ export * from './src/watcher'
 
 export * from './src/animation/animated'
 export * from './src/animation/registry'
+export * from './src/animation/set-beat-interval'
 
 export * from './src/outputs/artnet'
