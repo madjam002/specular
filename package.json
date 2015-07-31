@@ -8,19 +8,11 @@
   },
   "author": "Jamie Greeff <jamiegreeff+git@gmail.com>",
   "license": "MIT",
-  "browserify": {
-    "transform": [
-      ["babelify", {"stage": 0}]
-    ]
-  },
   "dependencies": {
     "artnet": "0.0.3",
     "lodash": "^3.9.3",
     "react": "^0.13.3",
     "tween-functions": "^1.0.2",
     "socket.io": "^1.3.5"
-  },
-  "devDependencies": {
-    "babelify": "^6.1.2"
   }
 }
