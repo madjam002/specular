@@ -68,6 +68,11 @@ export default function(progressable) {
         if (this._delay) this._startTime += this._delay
         this._duration = Beat.ms * this._beat
       }
+
+      if (this._ms) {
+        // set duration if ms
+        this._duration = this._ms
+      }
     },
 
     restart() {
