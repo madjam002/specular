@@ -16,6 +16,8 @@ export default class AnimatedValue {
   }
 
   update(time) {
+    if (!this._startTime) return
+
     // get progress of animation
     let progress = (time - this._startTime) / this._duration
     progress = Math.min(progress, 1)

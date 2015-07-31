@@ -37,7 +37,12 @@ export default function(progressable) {
       }
 
       // initial update
-      this.update(Date.now())
+      if (this._function) {
+        this.update(Date.now())
+      } else {
+        this.value = this.from
+        this.inverse = 255 - this.from
+      }
 
       // add to animation registry
       AnimationRegistry.add(this, this._beat !== undefined)
