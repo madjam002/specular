@@ -24,7 +24,8 @@ export default function createContainer(app) {
     }
 
     updateProps(props) {
-      this.setState(props)
+      // HACK don't use setState as we constantly render anyway so we don't want unnecessary renders from setState!
+      Object.assign(this.state, props)
     }
 
     getProps() {

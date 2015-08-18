@@ -46,6 +46,8 @@ export default class Specular extends EventEmitter {
     Beat.update(Date.now())
     Animation.updateAll(Date.now())
     AnimationRegistry.updateAll(Date.now())
+
+    if (this.rootInstance) this.rootInstance.forceUpdate()
   }
 
   setRootProps(props) {

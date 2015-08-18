@@ -5,8 +5,6 @@ import AnimatedStepper from './stepper'
 import AnimatedValue from './value'
 
 export function Animated(Component) {
-  Component.prototype.tweens = {}
-
   return class AnimationWrapper extends React.Component {
     componentWillMount() {
       this.interval = setInterval(() => this.forceUpdate(), 1000 / 120)
