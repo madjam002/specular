@@ -32,6 +32,20 @@ export class Sequencer extends React.Component {
       this.clearInterval()
   }
 
+  componentWillReceiveProps(newProps) {
+    if (newProps.beats !== this.props.beats) {
+      if (this.clearInterval)
+        this.clearInterval()
+
+      this.clearInterval = setBeatInterval(() => {
+        let next = this.state.curr + 1
+        if (next >= this.props.count) next = 0
+
+        this.setState({ curr: next })
+      }, newProps.beats)
+    }
+  }
+
   render() {
     // children should be a single function with an argument of the current sequencer index
     const func = this.props.children
