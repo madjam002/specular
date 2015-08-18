@@ -6,13 +6,9 @@ import AnimatedValue from './value'
 
 export function Animated(Component) {
   return class AnimationWrapper extends React.Component {
-    componentWillMount() {
-      this.interval = setInterval(() => this.forceUpdate(), 1000 / 120)
-    }
+    static defaultProps = Component.defaultProps || {}
 
     componentWillUnmount() {
-      clearInterval(this.interval)
-
       // dispose of animations
       if (this.refs.component && this.refs.component.state) {
         const compState = this.refs.component.state
