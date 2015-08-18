@@ -6,6 +6,7 @@ import {Animation} from './animation'
 import {AnimationRegistry} from './animation/registry'
 import {Beat} from './beat'
 import createContainer from './create-container'
+import {render} from './renderer/render'
 
 export default class Specular extends EventEmitter {
   constructor() {
@@ -19,19 +20,6 @@ export default class Specular extends EventEmitter {
   }
 
   start(path) {
-    // !! inb4 Hax !!
-    // Because React depends on the DOM at the moment, and I haven't figured out how to
-    // build a custom renderer yet, we're going to insert jsdom if this is running in Node.
-    // I'm pretty sure this doesn't slow anything down as we're not rendering DOM nodes anyway.
-    try {
-      let document = null
-      global.document = require('jsdom').jsdom()
-      global.window = global.document.parentWindow
-      global.navigator = { userAgent: '__specular__' }
-    } catch (ex) {}
-    const dummyContainerNode = document.createElement('div')
-    // no more hax beyond this point... (hopefully)
-
     this.mainComponent = require(path)
     this.rootPath = path
 
@@ -44,7 +32,7 @@ export default class Specular extends EventEmitter {
     this._updateLoop()
 
     const rootElement = React.createElement(containerComponent, {})
-    this.rootInstance = React.render(rootElement, dummyContainerNode)
+    this.rootInstance = render(rootElement)
   }
 
   _updateLoop() {
