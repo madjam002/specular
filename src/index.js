@@ -13,6 +13,7 @@ export default class Specular extends EventEmitter {
     super()
 
     this.universeCount = 0
+    this.renderPasses = []
   }
 
   use(func) {
@@ -64,12 +65,20 @@ export default class Specular extends EventEmitter {
     setTimeout(() => this._performUpdate())
   }
 
+  registerRenderPass(renderPass) {
+    this.renderPasses.push(renderPass)
+  }
+
   _performUpdate() {
     this._updateQueued = false
 
     // go through the render tree and collect data
     const universes = new Array(this.universeCount)
+    this.renderPasses.forEach(pass => pass.before.call(this))
+
     this._renderComponent(universes, this.rootInstance._reactInternalInstance)
+
+    this.renderPasses.forEach(pass => pass.after.call(this))
 
     // ensure undefined values are 0
     for (let i = 0; i < universes.length; i++) {
@@ -81,7 +90,7 @@ export default class Specular extends EventEmitter {
     this.emit('output', universes)
   }
 
-  _renderComponent(universes, component) {
+  _renderComponent(universes, component, renderCallbacks) {
     if (component._renderedComponent) {
       this._renderComponent(universes, component._renderedComponent)
       return
@@ -92,6 +101,9 @@ export default class Specular extends EventEmitter {
       this.universeCount = Math.max(this.universeCount, component.fixtureUniverse)
       Object.assign(universes[component.fixtureUniverse], component.fixtureData)
     }
+
+    // call render callbacks
+    this.renderPasses.forEach(pass => pass.render.call(this, component))
 
     // process children
     if (component._renderedChildren) {
