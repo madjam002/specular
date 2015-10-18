@@ -12,11 +12,12 @@ const ON_READY_QUEUEING = {
   },
 }
 
-@PooledClass.addPoolingTo
-export default function ReconcileTransaction() {
+const ReconcileTransaction = PooledClass.addPoolingTo(function ReconcileTransaction() {
   this.reinitializeTransaction()
   this.reactMountReady = CallbackQueue.getPooled(null)
-}
+})
+
+export default ReconcileTransaction
 
 const Mixin = {
   getTransactionWrappers() {
