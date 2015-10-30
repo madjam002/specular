@@ -9,6 +9,8 @@ import createContainer from './create-container'
 import {render} from './renderer/render'
 
 export default class Specular extends EventEmitter {
+  static render = render
+
   constructor() {
     super()
 

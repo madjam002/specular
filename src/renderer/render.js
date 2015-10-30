@@ -5,9 +5,11 @@ import instantiateReactComponent from 'react/lib/instantiateReactComponent'
 import invariant from 'invariant'
 import inject from './inject'
 
+import {renderComponents} from './render-components'
+
 inject()
 
-export function render(element) {
+export function render(element, renderPasses) {
   invariant(
     ReactElement.isValidElement(element),
     'render(): You must pass a valid ReactElement.',
@@ -20,6 +22,8 @@ export function render(element) {
   transaction.perform(() =>
     component.mountComponent(id, transaction, {})
   )
+
+  renderComponents(component._instance, renderPasses)
 
   return component._instance
 }
