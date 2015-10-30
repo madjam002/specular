@@ -1,0 +1,26 @@
+{
+  "name": "specular-dmx",
+  "version": "0.0.1",
+  "description": "DMX light control using Specular.",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Jamie Greeff <jamiegreeff+git@gmail.com>",
+  "license": "MIT",
+  "keywords": [
+    "specular",
+    "dmx",
+    "lighting",
+    "react",
+    "reactjs"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/specularjs/specular.git"
+  },
+  "peerDependencies": {
+    "react": "^0.14.1",
+    "specular": "^0.0.1"
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "name": "specular-dmx-artnet",
+  "version": "0.0.1",
+  "description": "Output DMX to ArtNet from Specular.",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Jamie Greeff <jamiegreeff+git@gmail.com>",
+  "license": "MIT",
+  "keywords": [
+    "specular",
+    "dmx",
+    "artnet",
+    "lighting",
+    "react",
+    "reactjs"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/specularjs/specular.git"
+  },
+  "peerDependencies": {
+    "specular": "^0.0.1",
+    "specular-dmx": "^0.0.1"
+  },
+  "dependencies": {
+    "artnet": "^1.0.1"
+  }
+}
