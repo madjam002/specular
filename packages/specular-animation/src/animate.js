@@ -6,6 +6,7 @@ export class Animate extends React.Component {
 
   static defaultProps = {
     duration: 500,
+    ease: 'linear',
   }
 
   constructor(props) {
@@ -15,7 +16,7 @@ export class Animate extends React.Component {
       onUpdate: this.actorUpdated,
       values: props.from || {},
     })
-    this.tween = new ui.Tween({ ...props })
+    this.tween = this.createTween(props)
 
     if (props.beat != null) {
       BeatEngine.beatBasedAnimations.push(this.actor)
@@ -38,11 +39,23 @@ export class Animate extends React.Component {
     this.actor.stop()
 
     this.actor.set({ values: props.from || {} })
-
-    const duration = this.actor._beatDuration ? this.actor._beatDuration : props.duration
-    this.tween = new ui.Tween({ ...props, duration })
+    this.tween = this.createTween(props)
 
     this.actor.start(this.tween)
+  }
+
+  createTween(props) {
+    const newProps = { ...props }
+
+    if (this.actor._beatDuration) {
+      newProps.duration = this.actor._beatDuration
+    }
+
+    if (props.ease === false) {
+      newProps.ease = (prog) => this.actor.activeActions[0].playDirection === 1 ? 1 : 0
+    }
+
+    return new ui.Tween(newProps)
   }
 
   actorUpdated = (values) => {
