@@ -1,7 +1,7 @@
 {
-  "name": "specular-animation",
+  "name": "specular",
   "version": "0.0.1",
-  "description": "Beat and time based animation/tweening engine based on Popmotion.",
+  "description": "Control anything and everything with ReactJS.",
   "main": "lib/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -10,10 +10,8 @@
   "license": "MIT",
   "keywords": [
     "specular",
-    "animation",
-    "popmotion",
-    "bpm",
-    "tempo",
+    "dmx",
+    "artnet",
     "lighting",
     "react",
     "reactjs"
@@ -26,6 +24,7 @@
     "react": "^0.14.1"
   },
   "dependencies": {
-    "popmotion": "^3.6.1"
+    "invariant": "^2.1.2",
+    "lodash.debounce": "^3.1.1"
   }
 }

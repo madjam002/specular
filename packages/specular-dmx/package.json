@@ -22,8 +22,5 @@
   "peerDependencies": {
     "react": "^0.14.1",
     "specular": "^0.0.1"
-  },
-  "babel": {
-    "stage": 0
   }
 }

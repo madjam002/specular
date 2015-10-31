@@ -1,12 +1,12 @@
-import _ from 'lodash'
+import debounce from 'lodash.debounce'
 import React, {PropTypes} from 'react'
 import ReactInstanceHandles from 'react/lib/ReactInstanceHandles'
 import ReactUpdates from 'react/lib/ReactUpdates'
 import ReactElement from 'react/lib/ReactElement'
 import instantiateReactComponent from 'react/lib/instantiateReactComponent'
 import invariant from 'invariant'
-import inject from './inject'
 
+import inject from './inject'
 import {renderComponents} from './render-components'
 
 inject()
@@ -22,7 +22,7 @@ export function render(element, renderPasses) {
       specularQueueUpdate: PropTypes.func,
     },
     componentWillMount() {
-      this.specularQueueUpdate = _.debounce(() => renderComponents(this, renderPasses))
+      this.specularQueueUpdate = debounce(() => renderComponents(this, renderPasses))
     },
     getChildContext() {
       return {

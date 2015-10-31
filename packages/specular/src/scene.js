@@ -9,7 +9,7 @@ export class Scene extends React.Component {
   }
 
   mountComponent(rootID, transaction, context) {
-    this.mountChildren(this._currentElement.props, transaction, context)
+    this.mountChildren(this._currentElement.props.children, transaction, context)
   }
 
   unmountComponent() {
