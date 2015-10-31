@@ -1,0 +1,34 @@
+{
+  "name": "specular-animation",
+  "version": "0.0.1",
+  "description": "Beat and time based animation/tweening engine based on Popmotion.",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Jamie Greeff <jamiegreeff+git@gmail.com>",
+  "license": "MIT",
+  "keywords": [
+    "specular",
+    "animation",
+    "popmotion",
+    "bpm",
+    "tempo",
+    "lighting",
+    "react",
+    "reactjs"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/specularjs/specular.git"
+  },
+  "peerDependencies": {
+    "react": "^0.14.1"
+  },
+  "dependencies": {
+    "popmotion": "^3.6.1"
+  },
+  "babel": {
+    "stage": 0
+  }
+}
