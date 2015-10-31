@@ -62,9 +62,15 @@ export const BeatEngine = {
     for (const animation of animations) {
       const activeAction = animation.activeActions[0]
 
-      // update duration
+      animation._beatDuration = this.ms * animation.beat
+
+      for (const valueKey in animation.values) {
+        animation.values[valueKey].duration = this.ms * animation.beat
+      }
+
+      if (!activeAction) continue
+
       activeAction.duration = this.ms * animation.beat
-      animation.values.red.duration = this.ms * animation.beat // TODO all values
 
       // if beat is 1 or over, restart on appropriate beat
       if (animation.beat >= 1 && this.currentBeat % animation.beat === 0) {
