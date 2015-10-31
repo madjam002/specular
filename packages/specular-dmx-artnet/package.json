@@ -25,6 +25,6 @@
     "specular-dmx": "^0.0.1"
   },
   "dependencies": {
-    "artnet": "^1.0.1"
+    "artnoot": "^2.0.1"
   }
 }
