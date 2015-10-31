@@ -2,3 +2,4 @@
 global.performance = null
 
 export * from './animate'
+export * from './beat-engine'

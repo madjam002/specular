@@ -1,5 +1,6 @@
 import React from 'react'
 import ui from 'popmotion'
+import {BeatEngine} from './beat-engine'
 
 export class Animate extends React.Component {
 
@@ -10,6 +11,10 @@ export class Animate extends React.Component {
       onUpdate: this.actorUpdated,
     })
     this.tween = new ui.Tween(props)
+
+    if (props.beat != null) {
+      BeatEngine.beatBasedAnimations.push(this.actor)
+    }
 
     this.state = { values: {} }
   }
