@@ -13,6 +13,7 @@ export class Animate extends React.Component {
 
     this.actor = new ui.Actor({
       onUpdate: this.actorUpdated,
+      values: props.from || {},
     })
     this.tween = new ui.Tween({ ...props })
 
@@ -35,8 +36,12 @@ export class Animate extends React.Component {
 
   componentWillReceiveProps(props) {
     this.actor.stop()
+
+    this.actor.set({ values: props.from || {} })
+
     const duration = this.actor._beatDuration ? this.actor._beatDuration : props.duration
     this.tween = new ui.Tween({ ...props, duration })
+
     this.actor.start(this.tween)
   }
 
