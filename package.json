@@ -1,9 +1,10 @@
 {
   "private": true,
+  "description": "This is a monorepo. Check packages/specular for the main specular package.",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "babel --stage 0 --out-dir lib/ src/",
-    "watch": "babel --watch --stage 0 --out-dir lib/ src/",
+    "build": "./scripts/build.sh",
+    "watch": "./scripts/watch.sh",
     "prepublish": "npm run build"
   },
   "license": "MIT",
