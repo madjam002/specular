@@ -1,4 +1,4 @@
-function msFromBPM(bpm) {
+function msFromBPM (bpm) {
   return 1000 * 60 / bpm
 }
 
@@ -10,17 +10,17 @@ export const BeatEngine = {
   currentBeat: 0,
   beatBasedAnimations: [],
 
-  start(initialBPM) {
+  start (initialBPM) {
     this.setBPM(initialBPM)
 
     setTimeout(this.performBeat.bind(this), this.ms)
   },
 
-  setBPM(bpm) {
+  setBPM (bpm) {
     this.ms = msFromBPM(bpm)
   },
 
-  tapBeat() {
+  tapBeat () {
     const previousMs = this.ms
     const timeSinceLastTap = Date.now() - lastBeatTap
     const timeSinceLastBeat = Date.now() - lastBeatTime
@@ -44,12 +44,12 @@ export const BeatEngine = {
 
     lastBeatTap = Date.now()
 
-    if (timeSinceLastBeat < previousMs && timeSinceLastBeat > (oldMs * .5)) {
+    if (timeSinceLastBeat < previousMs && timeSinceLastBeat > (previousMs * 0.5)) {
       this.performBeat()
     }
   },
 
-  performBeat() {
+  performBeat () {
     const now = Date.now()
 
     lastBeatTime = now
@@ -83,6 +83,6 @@ export const BeatEngine = {
     }
 
     setTimeout(this.performBeat.bind(this), this.ms)
-  },
+  }
 
 }

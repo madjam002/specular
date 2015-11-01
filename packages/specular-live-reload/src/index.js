@@ -17,7 +17,7 @@ require.searchCache = (moduleName, callback) => {
   let mod = require.resolve(moduleName)
 
   if (mod && ((mod = require.cache[mod]) !== undefined)) {
-    (function run(mod) {
+    (function run (mod) {
       mod.children.forEach(child => run(child))
 
       callback(mod)
@@ -25,7 +25,7 @@ require.searchCache = (moduleName, callback) => {
   }
 }
 
-export default function LiveReload(watchDir, modPath) {
+export default function LiveReload (watchDir, modPath) {
   require(path.resolve(modPath))
 
   fs.watch(path.resolve(watchDir), { recursive: true }, e => {

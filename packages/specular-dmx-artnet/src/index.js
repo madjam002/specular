@@ -1,8 +1,8 @@
 import artnoot from 'artnoot'
 
-export default function ArtNet(host) {
+export default function ArtNet (host) {
   const client = new artnoot.Client({
-    host,
+    host
   }).connect()
 
   client.set(0, 1, 0) // initial packet

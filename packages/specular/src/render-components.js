@@ -1,4 +1,4 @@
-function renderComponent(component, passes) {
+function renderComponent (component, passes) {
   if (component._renderedComponent) {
     renderComponent(component._renderedComponent, passes)
     return
@@ -16,7 +16,7 @@ function renderComponent(component, passes) {
   }
 }
 
-export function renderComponents(root, passes) {
+export function renderComponents (root, passes) {
   passes.forEach(pass => pass.before.call(this))
 
   renderComponent(root._reactInternalInstance, passes)

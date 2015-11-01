@@ -6,15 +6,15 @@ export class Animate extends React.Component {
 
   static defaultProps = {
     duration: 500,
-    ease: 'linear',
+    ease: 'linear'
   }
 
-  constructor(props) {
+  constructor (props) {
     super(props)
 
     this.actor = new ui.Actor({
       onUpdate: this.actorUpdated,
-      values: props.from || {},
+      values: props.from || {}
     })
     this.tween = this.createTween(props)
 
@@ -25,17 +25,17 @@ export class Animate extends React.Component {
     this.state = { values: {} }
   }
 
-  componentDidMount() {
+  componentDidMount () {
     this.actor.start(this.tween)
   }
 
-  componentWillUnmount() {
+  componentWillUnmount () {
     this.actor.stop()
     delete this.actor
     delete this.tween
   }
 
-  componentWillReceiveProps(props) {
+  componentWillReceiveProps (props) {
     this.actor.stop()
 
     this.actor.set({ values: props.from || {} })
@@ -44,7 +44,7 @@ export class Animate extends React.Component {
     this.actor.start(this.tween)
   }
 
-  createTween(props) {
+  createTween (props) {
     const newProps = { ...props }
 
     if (this.actor._beatDuration) {
@@ -58,11 +58,11 @@ export class Animate extends React.Component {
     return new ui.Tween(newProps)
   }
 
-  actorUpdated = (values) => {
+  actorUpdated = values => {
     this.setState({ values })
   }
 
-  render() {
+  render () {
     return this.props.children(this.state.values)
   }
 

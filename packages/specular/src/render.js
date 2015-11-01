@@ -11,27 +11,27 @@ import {renderComponents} from './render-components'
 
 inject()
 
-export function render(element, renderPasses) {
+export function render (element, renderPasses) {
   invariant(
     ReactElement.isValidElement(element),
-    'render(): You must pass a valid ReactElement.',
+    'render(): You must pass a valid ReactElement.'
   )
 
   const wrapperComponent = React.createClass({
     childContextTypes: {
-      specularQueueUpdate: PropTypes.func,
+      specularQueueUpdate: PropTypes.func
     },
-    componentWillMount() {
+    componentWillMount () {
       this.specularQueueUpdate = debounce(() => renderComponents(this, renderPasses))
     },
-    getChildContext() {
+    getChildContext () {
       return {
-        specularQueueUpdate: this.specularQueueUpdate,
+        specularQueueUpdate: this.specularQueueUpdate
       }
     },
-    render() {
+    render () {
       return element
-    },
+    }
   })
 
   const id = ReactInstanceHandles.createReactRootID()

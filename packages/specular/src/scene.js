@@ -3,20 +3,20 @@ import ReactMultiChild from 'react/lib/ReactMultiChild'
 
 export class Scene extends React.Component {
 
-  construct(element) {
+  construct (element) {
     this._currentElement = element
     this._renderedChildren = {}
   }
 
-  mountComponent(rootID, transaction, context) {
+  mountComponent (rootID, transaction, context) {
     this.mountChildren(this._currentElement.props.children, transaction, context)
   }
 
-  unmountComponent() {
+  unmountComponent () {
     this.unmountChildren()
   }
 
-  receiveComponent(nextElement, transaction, context) {
+  receiveComponent (nextElement, transaction, context) {
     const props = nextElement.props
     this._updateChildren(props.children, transaction, context)
     this._currentElement = nextElement
@@ -26,5 +26,5 @@ export class Scene extends React.Component {
 
 Object.assign(
   Scene.prototype,
-  ReactMultiChild.Mixin,
+  ReactMultiChild.Mixin
 )
