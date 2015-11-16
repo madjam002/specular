@@ -1,7 +1,7 @@
 {
   "name": "specular-animation",
   "version": "0.0.1",
-  "description": "Beat and time based animation/tweening engine based on Popmotion.",
+  "description": "Beat and time based animation/tweening engine for React and Specular.",
   "main": "lib/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -11,7 +11,7 @@
   "keywords": [
     "specular",
     "animation",
-    "popmotion",
+    "easing",
     "bpm",
     "tempo",
     "lighting",
@@ -26,6 +26,6 @@
     "react": "^0.14.1"
   },
   "dependencies": {
-    "popmotion": "^3.6.1"
+    "tween-functions": "^1.1.0"
   }
 }

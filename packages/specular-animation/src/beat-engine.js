@@ -1,3 +1,5 @@
+import {restart} from './animation-helpers'
+
 function msFromBPM (bpm) {
   return 1000 * 60 / bpm
 }
@@ -6,14 +8,13 @@ let lastBeatTime, lastBeatTap, beatTapChain
 
 export const BeatEngine = {
 
-  ms: 1000,
+  ms: 0,
   currentBeat: 0,
-  beatBasedAnimations: [],
+  beatBasedTweens: [],
 
   start (initialBPM) {
     this.setBPM(initialBPM)
-
-    setTimeout(this.performBeat.bind(this), this.ms)
+    this.performBeat()
   },
 
   setBPM (bpm) {
@@ -57,30 +58,19 @@ export const BeatEngine = {
 
     console.log('Performing beat', this.currentBeat)
 
-    const animations = this.beatBasedAnimations
+    const tweens = this.beatBasedTweens
 
-    for (const animation of animations) {
-      const activeAction = animation.activeActions[0]
+    tweens.forEach(tween => {
+      tween.duration = this.ms * tween.beat
 
-      animation._beatDuration = this.ms * animation.beat
-
-      for (const valueKey in animation.values) {
-        animation.values[valueKey].duration = this.ms * animation.beat
-      }
-
-      if (!activeAction) continue
-
-      activeAction.duration = this.ms * animation.beat
-
-      // if beat is 1 or over, restart on appropriate beat
-      if (animation.beat >= 1 && this.currentBeat % animation.beat === 0) {
-        if (activeAction.playDirection === 1 && activeAction.yoyo) {
-          activeAction.elapsed = activeAction.duration
+      if (tween.beat >= 1 && this.currentBeat % tween.beat === 0) {
+        if (tween.delay) {
+          setTimeout(() => restart(Date.now(), tween), tween.delay)
         } else {
-          activeAction.elapsed = 0
+          restart(now, tween)
         }
       }
-    }
+    })
 
     setTimeout(this.performBeat.bind(this), this.ms)
   }
