@@ -14,13 +14,14 @@ export class Animate extends React.Component {
   constructor (props) {
     super(props)
 
-    this.tweens = []
+    this.tweens = {}
     this.state = { values: {} }
   }
 
   componentDidMount () {
     registerComponent(this)
 
+    // create inital tweens
     Object.keys(this.props.values).forEach(key => this.createTween(this.props, key))
   }
 
@@ -28,15 +29,32 @@ export class Animate extends React.Component {
     unregisterComponent(this)
   }
 
-  componentWillReceiveProps (props) {
-    // TODO
+  componentWillReceiveProps (nextProps) {
+    const oldProps = this.props
+
+    const inheritedProps = {
+      yoyo: nextProps.yoyo,
+      easing: nextProps.easing,
+      duration: nextProps.duration,
+      beat: nextProps.beat
+    }
+
+    Object.keys(nextProps.values).forEach(key => {
+      if (this.tweens[key]) {
+        Object.assign(this.tweens[key], inheritedProps, nextProps.values[key])
+      } else {
+        this.createTween(nextProps, key)
+      }
+    })
   }
 
   update (now) {
-    this.tweens.forEach(tween => updateTween(now, tween))
+    const tweenKeys = Object.keys(this.tweens)
+
+    tweenKeys.forEach(tween => updateTween(now, this.tweens[tween]))
 
     const values = {}
-    this.tweens.forEach(tween => values[tween.key] = tween._currentValue)
+    tweenKeys.forEach(tween => values[tween] = this.tweens[tween]._currentValue)
 
     this.setState({ values })
   }
@@ -55,13 +73,11 @@ export class Animate extends React.Component {
     ? { ...inheritedProps, to: props.values[key], from: fromValues[key] || 0 }
     : { ...inheritedProps, ...props.values[key], from: fromValues[key] || 0 }
 
-    tween.key = key
-
     if (tween.beat != null) {
       BeatEngine.beatBasedTweens.push(tween)
     }
 
-    this.tweens.push(tween)
+    this.tweens[key] = tween
     start(tween)
 
     return tween
