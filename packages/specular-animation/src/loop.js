@@ -2,6 +2,7 @@ import remove from 'lodash.remove'
 
 let isRunning = false
 let registeredComponents = []
+let beatEngine = null
 
 export function startLoop () {
   isRunning = true
@@ -24,12 +25,20 @@ export function unregisterComponent (component) {
   remove(registeredComponents, component)
 }
 
+export function setBeatEngine (engine) {
+  beatEngine = engine
+}
+
 function loop () {
   if (isRunning) {
     setTimeout(loop, 1000 / 60)
   }
 
   const now = Date.now()
+
+  if (beatEngine != null) {
+    beatEngine.update(now)
+  }
 
   registeredComponents.forEach(component => component.update(now))
 }

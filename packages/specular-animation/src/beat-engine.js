@@ -1,20 +1,24 @@
 import {restart} from './animation-helpers'
+import {setBeatEngine} from './loop'
 
 function msFromBPM (bpm) {
   return 1000 * 60 / bpm
 }
 
-let lastBeatTime, lastBeatTap, beatTapChain
+let lastBeatTap
+let beatTapChain = []
 
 export const BeatEngine = {
 
   ms: 0,
   currentBeat: 0,
   beatBasedTweens: [],
+  lastBeatTime: null,
 
   start (initialBPM) {
     this.setBPM(initialBPM)
     this.performBeat()
+    setBeatEngine(this)
   },
 
   setBPM (bpm) {
@@ -24,10 +28,10 @@ export const BeatEngine = {
   tapBeat () {
     const previousMs = this.ms
     const timeSinceLastTap = Date.now() - lastBeatTap
-    const timeSinceLastBeat = Date.now() - lastBeatTime
+    const timeSinceLastBeat = Date.now() - this.lastBeatTime
 
     // discard current tap chain if too long
-    if (timeSinceLastTap > 2000) {
+    if (timeSinceLastTap > 2000 || !lastBeatTap) {
       // start new tap chain
       lastBeatTap = Date.now()
       beatTapChain = []
@@ -53,7 +57,7 @@ export const BeatEngine = {
   performBeat () {
     const now = Date.now()
 
-    lastBeatTime = now
+    this.lastBeatTime = now
     this.currentBeat++
 
     console.log('Performing beat', this.currentBeat)
@@ -71,8 +75,15 @@ export const BeatEngine = {
         }
       }
     })
+  },
 
-    setTimeout(this.performBeat.bind(this), this.ms)
+  update (now) {
+    if (now >= (this.lastBeatTime + this.ms)) {
+      this.performBeat()
+    }
+
+    const { currentBeat, ms, lastBeatTime } = this
+    this.currentBeatDecimal = currentBeat + ((now - lastBeatTime) / ms)
   }
 
 }
