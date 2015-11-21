@@ -1,0 +1,30 @@
+{
+  "name": "specular-midi",
+  "version": "0.0.1",
+  "description": "Control MIDI devices with Specular and ReactJS.",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Jamie Greeff <jamiegreeff+git@gmail.com>",
+  "license": "MIT",
+  "keywords": [
+    "specular",
+    "midi",
+    "lighting",
+    "react",
+    "reactjs"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/specularjs/specular.git"
+  },
+  "peerDependencies": {
+    "react": "^0.14.1",
+    "specular": "^0.0.1"
+  },
+  "dependencies": {
+    "lodash": "^3.10.1",
+    "midi": "^0.9.4"
+  }
+}
