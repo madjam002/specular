@@ -16,7 +16,15 @@ export default function (universeRenderers) {
     },
 
     after () {
-      Object.keys(universeRenderers).forEach(universe => universeRenderers[universe](universeData[universe]))
+      Object.keys(universeRenderers).forEach(universe => {
+        const renderers = universeRenderers[universe]
+
+        if (Array.isArray(renderers)) {
+          renderers.forEach(renderer => renderer(universeData[universe]))
+        } else {
+          renderers(universeData[universe])
+        }
+      })
     }
   }
 }
