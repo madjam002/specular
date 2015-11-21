@@ -40,6 +40,7 @@ export class Animate extends React.Component {
       yoyo: nextProps.yoyo,
       easing: nextProps.easing,
       duration: nextProps.duration,
+      delay: nextProps.delay,
       beat: nextProps.beat
     }
 
@@ -68,6 +69,7 @@ export class Animate extends React.Component {
       yoyo: props.yoyo,
       easing: props.easing,
       duration: props.duration,
+      delay: props.delay,
       beat: props.beat
     }
 
