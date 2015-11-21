@@ -23,7 +23,8 @@
     "url": "git://github.com/specularjs/specular.git"
   },
   "peerDependencies": {
-    "react": "^0.14.1"
+    "react": "^0.14.1",
+    "specular": "^0.0.1"
   },
   "dependencies": {
     "tween-functions": "^1.1.0"

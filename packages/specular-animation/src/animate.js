@@ -1,4 +1,5 @@
 import React from 'react'
+import {Scene} from 'specular'
 import {BeatEngine} from './beat-engine'
 import {registerComponent, unregisterComponent} from './loop'
 import {updateTween, start} from './animation-helpers'
@@ -84,7 +85,7 @@ export class Animate extends React.Component {
   }
 
   render () {
-    return this.props.children(this.state.values)
+    return <Scene>{this.props.children(this.state.values)}</Scene>
   }
 
 }
