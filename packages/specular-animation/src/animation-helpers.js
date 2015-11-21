@@ -1,6 +1,11 @@
 import tweenFunctions from 'tween-functions'
 import {BeatEngine} from './beat-engine'
 
+function noEasing(t, b, _c, d) {
+  if (t === d) return _c
+  else return b
+}
+
 export function updateTween (now, tween) {
   if (!tween._startTime) {
     return
@@ -18,7 +23,11 @@ export function updateTween (now, tween) {
   }
 
   // get value from easing function
-  tween._currentValue = tweenFunctions[tween.easing](progress, from, to, 1, tween.duration)
+  if (!tween.easing) {
+    tween._currentValue = noEasing(progress, from, to, 1, tween.duration)
+  } else {
+    tween._currentValue = tweenFunctions[tween.easing](progress, from, to, 1, tween.duration)
+  }
 
   // restart the animation if necessary
   // don't restart if this animation is every >1 beats, as the beat manager
