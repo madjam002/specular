@@ -1,7 +1,7 @@
 import debounce from 'lodash.debounce'
-import React, {PropTypes} from 'react'
 import ReactInstanceHandles from 'react/lib/ReactInstanceHandles'
 import ReactUpdates from 'react/lib/ReactUpdates'
+import ReactReconciler from 'react/lib/ReactReconciler'
 import ReactElement from 'react/lib/ReactElement'
 import instantiateReactComponent from 'react/lib/instantiateReactComponent'
 import invariant from 'invariant'
@@ -17,29 +17,14 @@ export function render (element, renderPasses) {
     'render(): You must pass a valid ReactElement.'
   )
 
-  const wrapperComponent = React.createClass({
-    childContextTypes: {
-      specularQueueUpdate: PropTypes.func
-    },
-    componentWillMount () {
-      this.specularQueueUpdate = debounce(() => renderComponents(this, renderPasses))
-    },
-    getChildContext () {
-      return {
-        specularQueueUpdate: this.specularQueueUpdate
-      }
-    },
-    render () {
-      return element
-    }
-  })
-
   const id = ReactInstanceHandles.createReactRootID()
   const transaction = ReactUpdates.ReactReconcileTransaction.getPooled()
-  const component = instantiateReactComponent(React.createElement(wrapperComponent))
+  const component = instantiateReactComponent(element)
 
   transaction.perform(() =>
-    component.mountComponent(id, transaction, {})
+    ReactReconciler.mountComponent(component, id, transaction, {
+      specularQueueUpdate: debounce(() => renderComponents(component._instance, renderPasses))
+    })
   )
 
   renderComponents(component._instance, renderPasses)
