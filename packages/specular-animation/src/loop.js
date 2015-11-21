@@ -1,3 +1,5 @@
+import remove from 'lodash.remove'
+
 let isRunning = false
 let registeredComponents = []
 
@@ -19,7 +21,7 @@ export function registerComponent (component) {
 }
 
 export function unregisterComponent (component) {
-  registeredComponents.splice(registeredComponents.indexOf(component), 1)
+  remove(registeredComponents, component)
 }
 
 function loop () {

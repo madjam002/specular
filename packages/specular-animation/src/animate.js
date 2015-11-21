@@ -1,5 +1,6 @@
 import React from 'react'
 import {Scene} from 'specular'
+import remove from 'lodash.remove'
 import {BeatEngine} from './beat-engine'
 import {registerComponent, unregisterComponent} from './loop'
 import {updateTween, start} from './animation-helpers'
@@ -28,6 +29,8 @@ export class Animate extends React.Component {
 
   componentWillUnmount () {
     unregisterComponent(this)
+
+    Object.keys(this.tweens).forEach(tween => remove(BeatEngine.beatBasedTweens, this.tweens[tween]))
   }
 
   componentWillReceiveProps (nextProps) {
