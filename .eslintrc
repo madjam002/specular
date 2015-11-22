@@ -1,0 +1,19 @@
+---
+  parser: "babel-eslint"
+  extends: "standard"
+
+  plugins:
+    - "react"
+
+  ecmaFeatures:
+    jsx: true
+
+  rules:
+    space-before-function-paren: [2, {"anonymous": "always", "named": "never"}]
+    comma-dangle: [2, "always-multiline"]
+    no-var: 2
+    prefer-const: 2
+    padded-blocks: 0
+
+    react/react-in-jsx-scope: 2
+    react/jsx-uses-react: 2
