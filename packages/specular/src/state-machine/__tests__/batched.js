@@ -10,36 +10,25 @@ chai.use(require('sinon-chai'))
 describe('BatchedStateMachine', function () {
 
   beforeEach(function () {
-    this.initialOn = sinon.spy()
-    this.initialOff = sinon.spy()
     this.offToOn = sinon.spy()
     this.onToOff = sinon.spy()
-    this.offToOff = sinon.spy()
+    this.onToOn = sinon.spy()
 
     this.create = initialState => {
       this.config = createStateMachineConfig({
         initialState,
 
-        on: {
-          fn: () => this.initialOn(),
-
-          toOff: {
-            to: 'off',
-            fn: () => this.onToOff(),
-          },
-        },
-        off: {
-          fn: () => this.initialOff(),
-
-          toOn: {
-            to: 'on',
-            fn: () => this.offToOn(),
-          },
-
-          stayOff: {
-            to: 'off',
-            fn: () => this.offToOff(),
-          },
+        receiveState: (nextState, oldState, { port, channel, note }) => {
+          if (nextState.on && !oldState.on) {
+            // off -> on
+            this.offToOn()
+          } else if (!nextState.on && oldState.on) {
+            // on -> off
+            this.onToOff()
+          } else if (nextState.on && oldState.on) {
+            // on -> on
+            this.onToOn()
+          }
         },
       })
 
@@ -55,61 +44,62 @@ describe('BatchedStateMachine', function () {
       }).to.throw('No initial state provided')
     })
 
-    it('shouldn\'t call the initial method on the first state if updates haven\'t been flushed', function () {
-      this.create('off')
+    it('shouldn\'t call receive props if updates haven\'t been flushed', function () {
+      this.create({ on: false })
+      this.stateMachine.setState({ on: true })
 
-      expect(this.initialOff).to.not.have.been.called
-    })
-
-    it('should call the initial method on the first state if updates have been flushed', function () {
-      this.create('off')
-      this.stateMachine.flushUpdates()
-
-      expect(this.initialOff).to.have.been.called
-    })
-
-    it('should call the initial method on the first state after many changes if updates have been flushed', function () {
-      this.create('off')
-      this.stateMachine.toOn()
-      this.stateMachine.flushUpdates()
-
-      expect(this.initialOn).to.have.been.called
-      expect(this.initialOff).to.not.have.been.called
       expect(this.offToOn).to.not.have.been.called
+    })
+
+    it('should call receive props with the first setState', function () {
+      this.create({ on: false })
+      this.stateMachine.setState({ on: true })
+      this.stateMachine.flushUpdates()
+
+      expect(this.offToOn).to.have.been.called
+    })
+
+    it('should call receive props once after many setState\'s', function () {
+      this.create({ on: false })
+      this.stateMachine.setState({ on: true })
+      this.stateMachine.setState({ on: true })
+      this.stateMachine.flushUpdates()
+
+      expect(this.offToOn).to.have.been.calledOnce
     })
 
   })
 
-  describe('travelling between states', function () {
+  describe('flushing updates', function () {
 
-    it('should transition to a new state', function () {
-      this.create('off')
+    it('should only call receive props with state between flushing updates', function () {
+      this.create({ on: false })
       this.stateMachine.flushUpdates()
 
-      this.stateMachine.toOn()
-      this.stateMachine.toOff()
-      this.stateMachine.toOn()
+      this.stateMachine.setState({ on: true })
+      this.stateMachine.setState({ on: false })
+      this.stateMachine.setState({ on: true })
       this.stateMachine.flushUpdates()
 
-      this.stateMachine.toOff()
+      this.stateMachine.setState({ on: false })
       this.stateMachine.flushUpdates()
-
-      expect(this.initialOff).to.have.been.called
-      expect(this.initialOn).to.not.have.been.called
 
       expect(this.offToOn).to.have.been.calledOnce
       expect(this.onToOff).to.have.been.calledOnce
     })
 
-    it('should be able to transition to itself', function () {
-      this.create('off')
+    it('should call receive props when the state is the same', function () {
+      this.create({ on: false })
       this.stateMachine.flushUpdates()
 
-      this.stateMachine.stayOff()
+      this.stateMachine.setState({ on: true })
       this.stateMachine.flushUpdates()
 
-      expect(this.initialOff).to.have.been.called
-      expect(this.offToOff).to.have.been.called
+      this.stateMachine.setState({ on: true })
+      this.stateMachine.flushUpdates()
+
+      expect(this.offToOn).to.have.been.calledOnce
+      expect(this.onToOn).to.have.been.calledOnce
     })
 
   })

@@ -14,5 +14,9 @@ export function createBatchedStateMachineCache(stateMachineConfig) {
 
       return stateMachine
     },
+
+    flushAll() {
+      Object.keys(cache).forEach(key => cache[key].flushUpdates())
+    },
   }
 }
