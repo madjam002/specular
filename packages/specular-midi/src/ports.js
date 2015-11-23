@@ -32,6 +32,15 @@ export const ports = {
             note: message[1],
             message,
           })
+        } else if (type >= 176 && type < (176 + 16)) {
+          const channel = message[0] - 176 + 1
+          events.emit('note:control-change', {
+            port: portNum,
+            channel,
+            control: message[1],
+            value: message[2],
+            message,
+          })
         }
       })
 

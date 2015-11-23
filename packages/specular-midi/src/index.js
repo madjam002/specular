@@ -7,3 +7,4 @@ export default function () {
 export * from './note'
 export * from './ports'
 export * from './events'
+export * from './control'

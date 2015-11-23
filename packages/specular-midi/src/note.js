@@ -82,7 +82,7 @@ export class Note extends React.Component {
     }
   }
 
-  gotNoteOn = ({ port, channel, note, message }) => {
+  gotNoteOn = ({ port, channel, note }) => {
     const props = this._currentElement.props
 
     if (
@@ -95,7 +95,7 @@ export class Note extends React.Component {
     }
   }
 
-  gotNoteOff = ({ port, channel, note, message }) => {
+  gotNoteOff = ({ port, channel, note }) => {
     const props = this._currentElement.props
 
     if (
