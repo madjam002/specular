@@ -7,6 +7,7 @@
   "scripts": {
     "test": "mocha $npm_package_options_mocha",
     "test-watch": "mocha -w $npm_package_options_mocha",
+    "lint": "eslint ./",
     "build": "./scripts/build.sh",
     "watch": "./scripts/watch.sh",
     "prepublish": "npm run build"
