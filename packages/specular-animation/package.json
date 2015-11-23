@@ -1,6 +1,6 @@
 {
   "name": "specular-animation",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Beat and time based animation/tweening engine for React and Specular.",
   "main": "lib/index.js",
   "scripts": {
@@ -24,7 +24,7 @@
   },
   "peerDependencies": {
     "react": "^0.14.1",
-    "specular": "^0.0.1"
+    "specular": "^0.0.2"
   },
   "dependencies": {
     "lodash.remove": "^3.1.0",

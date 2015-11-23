@@ -1,6 +1,6 @@
 {
   "name": "specular-dmx-artnet",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Output DMX to ArtNet from Specular.",
   "main": "lib/index.js",
   "scripts": {
@@ -21,8 +21,8 @@
     "url": "git://github.com/madjam002/specular.git"
   },
   "peerDependencies": {
-    "specular": "^0.0.1",
-    "specular-dmx": "^0.0.1"
+    "specular": "^0.0.2",
+    "specular-dmx": "^0.0.2"
   },
   "dependencies": {
     "artnoot": "^2.0.1"
