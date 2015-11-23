@@ -18,7 +18,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git://github.com/specularjs/specular.git"
+    "url": "git://github.com/madjam002/specular.git"
   },
   "peerDependencies": {
     "specular": "^0.0.1",

@@ -132,4 +132,4 @@ Specular.render(
 
 Licensed under the MIT License.
 
-View the full license [here](https://raw.githubusercontent.com/specularjs/specular/master/LICENSE).
+View the full license [here](https://raw.githubusercontent.com/madjam002/specular/master/LICENSE).
