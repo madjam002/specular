@@ -1,4 +1,4 @@
-import {BatchedStateMachine} from './batched-state-machine'
+import {BatchedStateMachine} from './batched'
 
 export function createBatchedStateMachineCache(stateMachineConfig) {
   const cache = {}
