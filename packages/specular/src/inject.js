@@ -3,6 +3,6 @@ import ReconcileTransaction from './reconcile-transaction'
 
 export default function () {
   ReactInjection.Updates.injectReconcileTransaction(
-    ReconcileTransaction
+    ReconcileTransaction,
   )
 }

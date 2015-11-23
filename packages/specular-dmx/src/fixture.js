@@ -3,37 +3,37 @@ import React, {PropTypes} from 'react'
 export class Fixture extends React.Component {
 
   static contextTypes = {
-    specularQueueUpdate: PropTypes.func.isRequired
+    specularQueueUpdate: PropTypes.func.isRequired,
   }
 
-  construct (element) {
+  construct(element) {
     this._currentElement = element
     this._channels = {}
     this._universe = null
   }
 
-  mountComponent (rootId, transaction, context) {
+  mountComponent(rootId, transaction, context) {
     const props = this._currentElement.props
     this.update(context, {}, props)
   }
 
-  unmountComponent () {
+  unmountComponent() {
     delete this._channels
   }
 
-  receiveComponent (nextElement, transaction, context) {
+  receiveComponent(nextElement, transaction, context) {
     const oldProps = this._currentElement.props
     this.update(context, oldProps, nextElement.props)
     this._currentElement = nextElement
   }
 
-  update (context, oldProps, props) {
+  update(context, oldProps, props) {
     this._channels = {}
     this._universe = props.universe
 
     const channels = props.channels
 
-    for (let index in channels) {
+    for (const index in channels) {
       if (channels[index] === undefined) continue
 
       const channelNumber = parseInt(index, 10) + props.start

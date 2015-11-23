@@ -1,7 +1,7 @@
 import {restart} from './animation-helpers'
 import {setBeatEngine} from './loop'
 
-function msFromBPM (bpm) {
+function msFromBPM(bpm) {
   return 1000 * 60 / bpm
 }
 
@@ -15,17 +15,17 @@ export const BeatEngine = {
   beatBasedTweens: [],
   lastBeatTime: null,
 
-  start (initialBPM) {
+  start(initialBPM) {
     this.setBPM(initialBPM)
     this.performBeat()
     setBeatEngine(this)
   },
 
-  setBPM (bpm) {
+  setBPM(bpm) {
     this.ms = msFromBPM(bpm)
   },
 
-  tapBeat () {
+  tapBeat() {
     const previousMs = this.ms
     const timeSinceLastTap = Date.now() - lastBeatTap
     const timeSinceLastBeat = Date.now() - this.lastBeatTime
@@ -54,7 +54,7 @@ export const BeatEngine = {
     }
   },
 
-  performBeat () {
+  performBeat() {
     const now = Date.now()
 
     this.lastBeatTime = now
@@ -77,13 +77,13 @@ export const BeatEngine = {
     })
   },
 
-  update (now) {
+  update(now) {
     if (now >= (this.lastBeatTime + this.ms)) {
       this.performBeat()
     }
 
     const { currentBeat, ms, lastBeatTime } = this
     this.currentBeatDecimal = currentBeat + ((now - lastBeatTime) / ms)
-  }
+  },
 
 }

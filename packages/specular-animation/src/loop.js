@@ -1,19 +1,19 @@
 import remove from 'lodash.remove'
 
 let isRunning = false
-let registeredComponents = []
+const registeredComponents = []
 let beatEngine = null
 
-export function startLoop () {
+export function startLoop() {
   isRunning = true
   loop()
 }
 
-export function stopLoop () {
+export function stopLoop() {
   isRunning = false
 }
 
-export function registerComponent (component) {
+export function registerComponent(component) {
   registeredComponents.push(component)
 
   if (!isRunning) {
@@ -21,15 +21,15 @@ export function registerComponent (component) {
   }
 }
 
-export function unregisterComponent (component) {
+export function unregisterComponent(component) {
   remove(registeredComponents, component)
 }
 
-export function setBeatEngine (engine) {
+export function setBeatEngine(engine) {
   beatEngine = engine
 }
 
-function loop () {
+function loop() {
   if (isRunning) {
     setTimeout(loop, 1000 / 60)
   }

@@ -11,7 +11,7 @@ import {renderComponents} from './render-components'
 
 inject()
 
-export function render (element, renderPasses) {
+export function render(element, renderPasses) {
   invariant(
     ReactElement.isValidElement(element),
     'render(): You must pass a valid ReactElement.'
@@ -23,7 +23,7 @@ export function render (element, renderPasses) {
 
   transaction.perform(() =>
     ReactReconciler.mountComponent(component, id, transaction, {
-      specularQueueUpdate: debounce(() => renderComponents(component._instance, renderPasses))
+      specularQueueUpdate: debounce(() => renderComponents(component._instance, renderPasses)),
     })
   )
 

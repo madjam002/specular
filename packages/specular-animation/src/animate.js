@@ -10,38 +10,36 @@ export class Animate extends React.Component {
   static defaultProps = {
     duration: 500,
     easing: 'linear',
-    yoyo: true
+    yoyo: true,
   }
 
-  constructor (props) {
+  constructor(props) {
     super(props)
 
     this.tweens = {}
     this.state = { values: {} }
   }
 
-  componentDidMount () {
+  componentDidMount() {
     registerComponent(this)
 
     // create inital tweens
     Object.keys(this.props.values).forEach(key => this.createTween(this.props, key))
   }
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     unregisterComponent(this)
 
     Object.keys(this.tweens).forEach(tween => remove(BeatEngine.beatBasedTweens, this.tweens[tween]))
   }
 
-  componentWillReceiveProps (nextProps) {
-    const oldProps = this.props
-
+  componentWillReceiveProps(nextProps) {
     const inheritedProps = {
       yoyo: nextProps.yoyo,
       easing: nextProps.easing,
       duration: nextProps.duration,
       delay: nextProps.delay,
-      beat: nextProps.beat
+      beat: nextProps.beat,
     }
 
     Object.keys(nextProps.values).forEach(key => {
@@ -53,7 +51,7 @@ export class Animate extends React.Component {
     })
   }
 
-  update (now) {
+  update(now) {
     const tweenKeys = Object.keys(this.tweens)
 
     tweenKeys.forEach(tween => updateTween(now, this.tweens[tween]))
@@ -64,13 +62,13 @@ export class Animate extends React.Component {
     this.setState({ values })
   }
 
-  createTween (props, key) {
+  createTween(props, key) {
     const inheritedProps = {
       yoyo: props.yoyo,
       easing: props.easing,
       duration: props.duration,
       delay: props.delay,
-      beat: props.beat
+      beat: props.beat,
     }
 
     const fromValues = props.from || {}
@@ -89,7 +87,7 @@ export class Animate extends React.Component {
     return tween
   }
 
-  render () {
+  render() {
     return <Scene>{this.props.children(this.state.values)}</Scene>
   }
 

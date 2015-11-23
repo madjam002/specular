@@ -3,16 +3,16 @@ import PooledClass from 'react/lib/PooledClass'
 import Transaction from 'react/lib/Transaction'
 
 const ON_READY_QUEUEING = {
-  initialize () {
+  initialize() {
     this.reactMountReady.reset()
   },
 
-  close () {
+  close() {
     this.reactMountReady.notifyAll()
-  }
+  },
 }
 
-const ReconcileTransaction = PooledClass.addPoolingTo(function ReconcileTransaction () {
+const ReconcileTransaction = PooledClass.addPoolingTo(function ReconcileTransaction() {
   this.reinitializeTransaction()
   this.reactMountReady = CallbackQueue.getPooled(null)
 })
@@ -20,18 +20,18 @@ const ReconcileTransaction = PooledClass.addPoolingTo(function ReconcileTransact
 export default ReconcileTransaction
 
 const Mixin = {
-  getTransactionWrappers () {
+  getTransactionWrappers() {
     return [ON_READY_QUEUEING]
   },
 
-  getReactMountReady () {
+  getReactMountReady() {
     return this.reactMountReady
   },
 
-  destructor () {
+  destructor() {
     CallbackQueue.release(this.reactMountReady)
     this.reactMountReady = null
-  }
+  },
 }
 
 Object.assign(

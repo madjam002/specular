@@ -1,4 +1,3 @@
-import remove from 'lodash.remove'
 import {registerComponent, unregisterComponent} from './loop'
 import {BeatEngine} from './beat-engine'
 
@@ -21,8 +20,8 @@ class BeatInterval {
     unregisterComponent(this)
   }
 
-  update (time) {
-    const { lastBeatTime, ms, currentBeat, currentBeatDecimal } = BeatEngine
+  update(time) {
+    const { currentBeatDecimal } = BeatEngine
 
     const progress = currentBeatDecimal % this.beat
 

@@ -6,7 +6,7 @@ function noEasing(t, b, _c, d) {
   else return b
 }
 
-export function updateTween (now, tween) {
+export function updateTween(now, tween) {
   if (!tween._startTime) {
     return
   }
@@ -37,7 +37,7 @@ export function updateTween (now, tween) {
   }
 }
 
-export function start (tween) {
+export function start(tween) {
   if (tween.delay && !tween.beat) {
     setTimeout(() => doStart(tween), tween.delay)
   } else {
@@ -45,7 +45,7 @@ export function start (tween) {
   }
 }
 
-export function restart (now, tween) {
+export function restart(now, tween) {
   tween._startTime = now
 
   if (tween.yoyo) {
@@ -53,7 +53,7 @@ export function restart (now, tween) {
   }
 }
 
-function doStart (tween) {
+function doStart(tween) {
   const now = Date.now()
 
   tween._startTime = now

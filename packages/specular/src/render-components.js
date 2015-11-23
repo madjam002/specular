@@ -1,4 +1,4 @@
-function renderComponent (component, passes) {
+function renderComponent(component, passes) {
   if (component._renderedComponent) {
     renderComponent(component._renderedComponent, passes)
     return
@@ -10,13 +10,13 @@ function renderComponent (component, passes) {
   // process children
   if (component._renderedChildren) {
     const children = component._renderedChildren
-    for (let key in children) {
+    for (const key in children) {
       renderComponent(children[key], passes)
     }
   }
 }
 
-export function renderComponents (root, passes) {
+export function renderComponents(root, passes) {
   passes.forEach(pass => pass.before.call(this))
 
   renderComponent(root._reactInternalInstance, passes)

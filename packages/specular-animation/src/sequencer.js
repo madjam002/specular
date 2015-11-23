@@ -28,14 +28,16 @@ export class Sequencer extends React.Component {
   }
 
   componentWillUnmount() {
-    if (this.clearInterval)
+    if (this.clearInterval) {
       this.clearInterval()
+    }
   }
 
   componentWillReceiveProps(newProps) {
     if (newProps.beats !== this.props.beats) {
-      if (this.clearInterval)
+      if (this.clearInterval) {
         this.clearInterval()
+      }
 
       this.clearInterval = setBeatInterval(() => {
         let next = this.state.curr + 1

@@ -6,10 +6,10 @@ const _ports = {}
 export const ports = {
   get(port) {
     if (!_ports[port]) {
-      const inputPort = new midi.input()
-      const outputPort = new midi.output()
+      const inputPort = new midi.input() // eslint-disable-line new-cap
+      const outputPort = new midi.output() // eslint-disable-line new-cap
 
-      const portNum = parseInt(port)
+      const portNum = parseInt(port, 10)
 
       inputPort.openPort(portNum)
       outputPort.openPort(portNum)
