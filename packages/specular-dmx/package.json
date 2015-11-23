@@ -1,7 +1,7 @@
 {
   "name": "specular-dmx",
   "version": "0.0.1",
-  "description": "DMX light control using Specular.",
+  "description": "Control lighting fixtures and build light shows with React and Specular.",
   "main": "lib/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

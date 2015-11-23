@@ -1,7 +1,7 @@
 {
   "name": "specular-midi",
   "version": "0.0.1",
-  "description": "Control MIDI devices with Specular and ReactJS.",
+  "description": "Control MIDI devices with React and Specular.",
   "main": "lib/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
