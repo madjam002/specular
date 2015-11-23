@@ -1,33 +1,29 @@
-import React, {PropTypes} from 'react'
+import React from 'react'
+import {LeafComponent} from 'specular'
 
+@LeafComponent
 export class Fixture extends React.Component {
 
-  static contextTypes = {
-    specularQueueUpdate: PropTypes.func.isRequired,
-  }
+  constructor(element) {
+    super(element)
 
-  construct(element) {
-    this._currentElement = element
     this._channels = {}
     this._universe = null
   }
 
-  mountComponent(rootId, transaction, context) {
-    const props = this._currentElement.props
-    this.update(context, {}, props)
+  onComponentMount(props) {
+    this.update({}, props)
   }
 
-  unmountComponent() {
+  onComponentUnmount() {
     delete this._channels
   }
 
-  receiveComponent(nextElement, transaction, context) {
-    const oldProps = this._currentElement.props
-    this.update(context, oldProps, nextElement.props)
-    this._currentElement = nextElement
+  onComponentReceiveProps(nextProps, prevProps) {
+    this.update(prevProps, nextProps)
   }
 
-  update(context, oldProps, props) {
+  update(oldProps, props) {
     this._channels = {}
     this._universe = props.universe
 
@@ -40,7 +36,7 @@ export class Fixture extends React.Component {
       this._channels[channelNumber] = channels[index]
     }
 
-    context.specularQueueUpdate()
+    this.specularQueueUpdate()
   }
 
 }
