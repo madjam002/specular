@@ -5,7 +5,7 @@ function renderComponent(component, passes) {
   }
 
   // call render callbacks
-  passes.forEach(pass => pass.render.call(this, component))
+  passes.forEach(pass => pass.render && pass.render.call(this, component))
 
   // process children
   if (component._renderedChildren) {
@@ -17,9 +17,9 @@ function renderComponent(component, passes) {
 }
 
 export function renderComponents(root, passes) {
-  passes.forEach(pass => pass.before.call(this))
+  passes.forEach(pass => pass.before && pass.before.call(this))
 
   renderComponent(root._reactInternalInstance, passes)
 
-  passes.forEach(pass => pass.after.call(this))
+  passes.forEach(pass => pass.after && pass.after.call(this))
 }
