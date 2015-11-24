@@ -1,4 +1,5 @@
-import {render} from './render'
+import {render, unmountAt} from './render'
+import {createMount} from './create-mount'
 
 export * from './state-machine/batched'
 export * from './state-machine/create-config'
@@ -9,4 +10,6 @@ export * from './scene'
 
 export default {
   render,
+  unmountAt,
+  createMount,
 }
