@@ -1,4 +1,3 @@
-import debounce from 'lodash.debounce'
 import ReactInstanceHandles from 'react/lib/ReactInstanceHandles'
 import ReactUpdates from 'react/lib/ReactUpdates'
 import ReactReconciler from 'react/lib/ReactReconciler'
@@ -21,9 +20,25 @@ function renderNewComponent(element, renderPasses) {
   const transaction = ReactUpdates.ReactReconcileTransaction.getPooled()
   const component = instantiateReactComponent(element)
 
+  let isSpecularUpdateQueued = false
+
   transaction.perform(() =>
     ReactReconciler.mountComponent(component, id, transaction, {
-      specularQueueUpdate: debounce(() => renderComponents(component._instance, renderPasses)),
+      specularQueueUpdate: () => {
+        if (isSpecularUpdateQueued) {
+          return
+        }
+
+        isSpecularUpdateQueued = true
+
+        ReactUpdateQueue.enqueueCallback(
+          component._instance,
+          () => {
+            renderComponents(component._instance, renderPasses)
+            isSpecularUpdateQueued = false
+          },
+        )
+      },
     })
   )
 

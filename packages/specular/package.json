@@ -24,7 +24,6 @@
     "react": "^0.14.1"
   },
   "dependencies": {
-    "invariant": "^2.1.2",
-    "lodash.debounce": "^3.1.1"
+    "invariant": "^2.1.2"
   }
 }
