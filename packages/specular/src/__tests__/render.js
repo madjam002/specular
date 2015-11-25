@@ -18,7 +18,6 @@ describe('render', function () {
       this.componentWillMount = sinon.spy()
       this.componentWillUnmount = sinon.spy()
       this.componentWillReceiveProps = sinon.spy()
-      this.render = sinon.spy()
 
       this.mount = createMount()
 
@@ -52,6 +51,8 @@ describe('render', function () {
       expect(this.componentWillReceiveProps).to.have.been.calledOnce
 
       unmountAt(this.mount)
+
+      expect(this.componentWillUnmount).to.have.been.called
     })
 
   })
