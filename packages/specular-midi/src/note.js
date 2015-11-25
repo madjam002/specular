@@ -1,10 +1,11 @@
 import React, {PropTypes} from 'react'
-import {createBatchedStateMachineCache} from 'specular'
+import {LeafComponent, createBatchedStateMachineCache} from 'specular'
 import {noteStateMachine} from './state-machine'
 import {events} from './events'
 
 export const _stateMachines = createBatchedStateMachineCache(noteStateMachine)
 
+@LeafComponent
 export class Note extends React.Component {
 
   static propTypes = {
@@ -16,42 +17,35 @@ export class Note extends React.Component {
     onNoteOff: PropTypes.func,
   }
 
-  static contextTypes = {
-    specularQueueUpdate: PropTypes.func.isRequired,
-  }
-
   static defaultProps = {
     channel: 1,
     velocity: 0,
   }
 
-  construct(element) {
-    this._currentElement = element
+  constructor(element) {
+    super(element)
+
     this._stateMachine = null
     this._oldProps = {}
   }
 
-  mountComponent(rootID, transaction, context) {
+  onComponentMount(props) {
     events.on('note:on', this.gotNoteOn)
     events.on('note:off', this.gotNoteOff)
 
-    context.specularQueueUpdate()
+    this.specularQueueUpdate()
   }
 
-  unmountComponent() {
-    if (this._stateMachine) {
-      this._stateMachine.setState({ on: false })
-    }
-
+  onComponentUnmount() {
     events.removeListener('note:on', this.gotNoteOn)
     events.removeListener('note:off', this.gotNoteOff)
+
+    this.specularQueueUpdate()
   }
 
-  receiveComponent(nextElement, transaction, context) {
-    this._oldProps = this._currentElement.props
-    this._currentElement = nextElement
-
-    context.specularQueueUpdate()
+  onComponentReceiveProps(nextProps, prevProps) {
+    this._oldProps = prevProps
+    this.specularQueueUpdate()
   }
 
   render() {
@@ -64,10 +58,6 @@ export class Note extends React.Component {
       oldProps.channel !== props.channel ||
       oldProps.note !== props.note
     ) {
-      if (this._stateMachine) {
-        this._stateMachine.setState({ on: false })
-      }
-
       const stateMachineProps = {
         port: props.port,
         channel: props.channel,
