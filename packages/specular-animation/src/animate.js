@@ -33,7 +33,9 @@ export class Animate extends React.Component {
     Object.keys(this.tweens).forEach(tween => remove(BeatEngine.beatBasedTweens, this.tweens[tween]))
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps(_nextProps) {
+    const nextProps = Object.assign({}, Animate.defaultProps, _nextProps)
+
     const inheritedProps = {
       yoyo: nextProps.yoyo,
       easing: nextProps.easing,
