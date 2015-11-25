@@ -102,6 +102,20 @@ describe('BatchedStateMachine', function () {
       expect(this.onToOn).to.have.been.calledOnce
     })
 
+    it('should call receive state with the initial state if not changed between updates', function () {
+      this.create({ on: false })
+      this.stateMachine.flushUpdates()
+
+      this.stateMachine.setState({ on: true })
+      this.stateMachine.flushUpdates()
+
+      expect(this.offToOn).to.have.been.calledOnce
+
+      this.stateMachine.flushUpdates()
+
+      expect(this.onToOff).to.have.been.calledOnce
+    })
+
   })
 
 })
