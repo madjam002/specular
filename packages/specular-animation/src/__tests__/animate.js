@@ -42,6 +42,8 @@ describe.only('<Animate /> component', function () {
             {() => {}}
           </Animate>
         )
+
+        this.tree.getMountedInstance().componentDidMount()
       })
 
       it('should register the component with the loop', function () {
@@ -72,6 +74,8 @@ describe.only('<Animate /> component', function () {
             {() => {}}
           </Animate>
         )
+
+        this.tree.getMountedInstance().componentDidMount()
       })
 
       it('should register the component with the loop', function () {
@@ -104,6 +108,8 @@ describe.only('<Animate /> component', function () {
             {() => {}}
           </Animate>
         )
+
+        this.tree.getMountedInstance().componentDidMount()
       })
 
       it('should register the beat tween with the beat engine', function () {
@@ -140,6 +146,8 @@ describe.only('<Animate /> component', function () {
             {() => {}}
           </Animate>
         )
+
+        this.tree.getMountedInstance().componentDidMount()
       })
 
       it('should register the beat tween with the beat engine', function () {
@@ -176,6 +184,8 @@ describe.only('<Animate /> component', function () {
             {() => {}}
           </Animate>
         )
+
+        this.tree.getMountedInstance().componentDidMount()
       })
 
       it('should create the tweens', function () {
@@ -212,6 +222,8 @@ describe.only('<Animate /> component', function () {
             {() => {}}
           </Animate>
         )
+
+        this.tree.getMountedInstance().componentDidMount()
 
         values = {
           ...values,

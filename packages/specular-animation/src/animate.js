@@ -20,7 +20,7 @@ export class Animate extends React.Component {
     this.state = { values: {} }
   }
 
-  componentWillMount() {
+  componentDidMount() {
     registerComponent(this)
 
     // create inital tweens
