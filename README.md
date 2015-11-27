@@ -1,4 +1,4 @@
-specular
+specular [![Build Status](https://img.shields.io/travis/madjam002/specular.svg?style=flat)](https://travis-ci.org/madjam002/specular) [![Downloads](https://img.shields.io/npm/dm/specular.svg)](https://npmjs.com/package/specular) [![NPM](https://img.shields.io/npm/v/specular.svg)](https://npmjs.com/package/specular)
 ========
 
 *This project is a work in progress, website coming soon! It has been released early to get feedback.*
