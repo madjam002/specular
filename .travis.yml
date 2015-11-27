@@ -3,5 +3,13 @@ node_js:
   - "4.1"
   - "4.0"
   - "0.12"
+sudo: false
+addons:
+  apt:
+    sources:
+    - ubuntu-toolchain-r-test
+    packages:
+    - g++-4.8
+    - libasound2-dev
 
 script: ./scripts/ci.sh
