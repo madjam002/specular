@@ -19,7 +19,7 @@ const beatEngineMock = {
 
 let Animate
 
-describe.only('<Animate /> component', function () {
+describe('<Animate /> component', function () {
 
   beforeEach(function () {
     loopMock.registerComponent = sinon.spy()
