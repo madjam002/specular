@@ -5,8 +5,9 @@
     "mocha": "--compilers js:babel/register packages/*/src/{,**}/__tests__/*.js"
   },
   "scripts": {
-    "test": "mocha $npm_package_options_mocha",
-    "test-watch": "mocha -w $npm_package_options_mocha",
+    "test": "npm run unit && npm run lint",
+    "unit": "mocha $npm_package_options_mocha",
+    "unit-watch": "mocha -w $npm_package_options_mocha",
     "lint": "eslint ./",
     "build": "./scripts/build.sh",
     "watch": "./scripts/watch.sh",
