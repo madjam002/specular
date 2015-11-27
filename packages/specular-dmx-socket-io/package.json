@@ -1,6 +1,6 @@
 {
   "name": "specular-dmx-socket-io",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Output DMX to Socket.IO from Specular.",
   "main": "lib/index.js",
   "scripts": {

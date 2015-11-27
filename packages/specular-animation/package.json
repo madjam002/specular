@@ -1,6 +1,6 @@
 {
   "name": "specular-animation",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Beat and time based animation/tweening engine for React and Specular.",
   "main": "lib/index.js",
   "scripts": {

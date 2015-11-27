@@ -1,6 +1,6 @@
 {
   "name": "specular-midi",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Control MIDI devices with React and Specular.",
   "main": "lib/index.js",
   "scripts": {
