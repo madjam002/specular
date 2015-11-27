@@ -36,7 +36,8 @@
     "semver": "^5.1.0",
     "shelljs": "^0.5.3",
     "sinon": "^1.17.2",
-    "sinon-chai": "^2.8.0"
+    "sinon-chai": "^2.8.0",
+    "specular": "0.0.3"
   },
   "babel": {
     "stage": 0
