@@ -12,9 +12,7 @@
     "specular",
     "dmx",
     "socket.io",
-    "lighting",
-    "react",
-    "reactjs"
+    "lighting"
   ],
   "repository": {
     "type": "git",

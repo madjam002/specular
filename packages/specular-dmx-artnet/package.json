@@ -12,9 +12,7 @@
     "specular",
     "dmx",
     "artnet",
-    "lighting",
-    "react",
-    "reactjs"
+    "lighting"
   ],
   "repository": {
     "type": "git",
