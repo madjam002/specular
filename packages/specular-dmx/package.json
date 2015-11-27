@@ -22,5 +22,8 @@
   "peerDependencies": {
     "react": "^0.14.1",
     "specular": "^0.0.2"
+  },
+  "devDependencies": {
+    "specular": "^0.0.2"
   }
 }
