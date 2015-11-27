@@ -27,6 +27,10 @@ export function unregisterComponent(component) {
 
 export function setBeatEngine(engine) {
   beatEngine = engine
+
+  if (!isRunning) {
+    startLoop()
+  }
 }
 
 function loop() {
