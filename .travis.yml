@@ -12,4 +12,6 @@ addons:
     - g++-4.8
     - libasound2-dev
 
-script: ./scripts/ci.sh
+script:
+  - export CXX=g++-4.8
+  - ./scripts/ci.sh
