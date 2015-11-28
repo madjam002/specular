@@ -1,3 +1,4 @@
+import {EventEmitter} from 'events'
 import {restart} from './animation-helpers'
 import {setBeatEngine} from './loop'
 
@@ -8,12 +9,17 @@ function msFromBPM(bpm) {
 let lastBeatTap
 let beatTapChain = []
 
+const events = new EventEmitter()
+
 export const BeatEngine = {
 
   ms: 0,
   currentBeat: 0,
   beatBasedTweens: [],
   lastBeatTime: null,
+
+  on: events.on.bind(events),
+  removeListener: events.removeListener.bind(events),
 
   start(initialBPM) {
     this.setBPM(initialBPM)
@@ -26,9 +32,12 @@ export const BeatEngine = {
   },
 
   tapBeat() {
+    const now = Date.now()
     const previousMs = this.ms
-    const timeSinceLastTap = Date.now() - lastBeatTap
-    const timeSinceLastBeat = Date.now() - this.lastBeatTime
+    const timeSinceLastTap = now - lastBeatTap
+    const timeSinceLastBeat = now - this.lastBeatTime
+
+    events.emit('tap')
 
     // discard current tap chain if too long
     if (timeSinceLastTap > 2000 || !lastBeatTap) {
@@ -40,7 +49,7 @@ export const BeatEngine = {
 
     beatTapChain.push(timeSinceLastTap)
 
-    if (beatTapChain.length > 8) {
+    if (beatTapChain.length > 20) {
       beatTapChain = beatTapChain.slice(1)
     }
 
@@ -61,6 +70,7 @@ export const BeatEngine = {
     this.currentBeat++
 
     console.log('Performing beat', this.currentBeat)
+    events.emit('beat', {beat: this.currentBeat})
 
     const tweens = this.beatBasedTweens
 
