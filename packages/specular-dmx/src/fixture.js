@@ -17,6 +17,7 @@ export class Fixture extends React.Component {
 
   onComponentUnmount() {
     delete this._channels
+    this.specularQueueUpdate()
   }
 
   onComponentReceiveProps(nextProps, prevProps) {
