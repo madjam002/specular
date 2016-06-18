@@ -3,7 +3,7 @@ import {Scene} from 'specular'
 import remove from 'lodash.remove'
 import {BeatEngine} from './beat-engine'
 import {registerComponent, unregisterComponent} from './loop'
-import {updateTween, start} from './animation-helpers'
+import {updateTween, start, restart} from './animation-helpers'
 
 export class Animate extends React.Component {
 
@@ -46,7 +46,12 @@ export class Animate extends React.Component {
 
     Object.keys(nextProps.values).forEach(key => {
       if (this.tweens[key]) {
-        Object.assign(this.tweens[key], inheritedProps, nextProps.values[key])
+        const tween = typeof nextProps.values[key] === 'number'
+          ? { ...inheritedProps, to: nextProps.values[key], from: this.tweens[key]._currentValue }
+          : { ...inheritedProps, ...nextProps.values[key], from: this.tweens[key]._currentValue }
+
+        Object.assign(this.tweens[key], tween)
+        restart(Date.now(), this.tweens[key])
       } else {
         this.createTween(nextProps, key)
       }

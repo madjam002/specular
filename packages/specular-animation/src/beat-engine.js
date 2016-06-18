@@ -27,6 +27,11 @@ export const BeatEngine = {
     setBeatEngine(this)
   },
 
+  goToBeat(beat) {
+    this.currentBeat = beat - 1
+    this.performBeat()
+  },
+
   setBPM(bpm) {
     this.ms = msFromBPM(bpm)
   },

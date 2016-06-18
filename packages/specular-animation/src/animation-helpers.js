@@ -32,7 +32,7 @@ export function updateTween(now, tween) {
   // restart the animation if necessary
   // don't restart if this animation is every >1 beats, as the beat manager
   // will handle restarting it.
-  if (progress >= 1 && (!tween.beat || tween.beat < 1)) {
+  if (progress >= 1 && (!tween.beat || tween.beat < 1) && (tween.yoyo || tween.repeat)) {
     restart(now, tween)
   }
 }
@@ -65,7 +65,7 @@ function doStart(tween) {
     const beatsIn = currentBeat - startBeat
     const startTime = lastBeatTime - (ms * beatsIn)
 
-    tween._startTime = startTime
+    tween._startTime = startTime || now
 
     if (tween.delay) {
       tween._startTime += tween.delay
