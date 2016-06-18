@@ -1,6 +1,6 @@
 {
   "name": "specular-dmx",
-  "version": "0.0.2",
+  "version": "0.0.4",
   "description": "Control lighting fixtures and build light shows with React and Specular.",
   "main": "lib/index.js",
   "scripts": {
